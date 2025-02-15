@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ad96a594659bc43bb9159271c05b2a, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  itemName: Sword
+  itemIndex: 9
+  canStacking: 0
+  maxStack: 1
+  itemIcon: {fileID: -718760439, guid: f2e798fc298f6b54aa87f976c4020aaa, type: 3}
+  iconScale: {x: 4, y: 4, z: 4}
+  defaultType: 3
+  otherTypes: 
