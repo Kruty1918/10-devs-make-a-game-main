@@ -1,4 +1,4 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +21,7 @@ namespace Bonjoura.Craft
 
         private void OnValidate()
         {
-            if(materialList.Count > MaxMaterial) 
+            if (materialList.Count > MaxMaterial)
             {
                 materialList.RemoveRange(MaxMaterial, materialList.Count - MaxMaterial);
             }

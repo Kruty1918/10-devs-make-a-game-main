@@ -1,5 +1,4 @@
 using Bonjoura.Services;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -117,7 +116,7 @@ namespace Bonjoura.Player
         {
             if (_temperatureText != null)
             {
-                _temperatureText.text = $"{Mathf.RoundToInt(_temperature)}°C";
+                _temperatureText.text = $"{Mathf.RoundToInt(_temperature)}ï¿½C";
                 switch (_temperature)
                 {
                     case >= 44:

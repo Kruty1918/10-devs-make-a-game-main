@@ -1,9 +1,10 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class IslandsMap : MonoBehaviour //сюди лізти тільки в хімзахисті, дуже небезпечний, токсичний гавнокод
+public class IslandsMap : MonoBehaviour
 {
     [SerializeField] private int cost;
 
@@ -24,7 +25,7 @@ public class IslandsMap : MonoBehaviour //сюди лізти тільки в хімзахисті, дуже н
     }
     public void TrySpawnIsland()
     {
-        if (PlayerController.Instance.GetExperienceScript().experience >= cost)
+        if (SM.Instance<PlayerController>().GetExperienceScript().experience >= cost)
             SpawnRandomIsland();
         else
             Debug.Log("NotEnoughEXP");
@@ -48,7 +49,7 @@ public class IslandsMap : MonoBehaviour //сюди лізти тільки в хімзахисті, дуже н
         Quaternion rotation = new Quaternion(0, Random.Range(0, 380), 0, 0);
 
 
-        if(Physics.Raycast(spawnpos + Vector3.up * 100, Vector3.down, out var k, 5000, islandLayer))
+        if (Physics.Raycast(spawnpos + Vector3.up * 100, Vector3.down, out var k, 5000, islandLayer))
         {
             Destroy(islandSpawn.points[randInt].gameObject);
             islandSpawn.points.Remove(islandSpawn.points[randInt]);
@@ -83,11 +84,11 @@ public class IslandsMap : MonoBehaviour //сюди лізти тільки в хімзахисті, дуже н
         if (islandSpawn.points.Count <= 0)
             islands.Remove(islandSpawn);
 
-        PlayerController.Instance.GetExperienceScript().RemoveXP(cost);
+        SM.Instance<PlayerController>().GetExperienceScript().RemoveXP(cost);
 
         cost += 50;
 
         _totalLandtext.text = $"Buy New Land: {totalLands.Count}";
-        _landCosttext.text = $"Cost: {cost}" ;
+        _landCosttext.text = $"Cost: {cost}";
     }
 }

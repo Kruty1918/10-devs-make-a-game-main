@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Bonjoura.Services
@@ -5,22 +6,15 @@ namespace Bonjoura.Services
     public class DescriptionByRaycast : BaseRaycastLittleRaycastDetect
     {
         [SerializeField] private GameObject descriptionObject;
+        public event Action<bool> OnDescriptionActive;
 
-        protected override void OnIgnore()
-        {
-            descriptionObject.SetActive(false);
-        }
+        protected override void OnIgnore() => DescriptionSetActive(false);
+        protected override void OnDetect() => DescriptionSetActive(true);
 
-        protected override void OnDetect()
+        private void DescriptionSetActive(bool active)
         {
-            descriptionObject.SetActive(true);
-            ActiveDescription();
-        }
-
-        protected virtual void ActiveDescription()
-        {
-            
+            descriptionObject.SetActive(active);
+            OnDescriptionActive?.Invoke(active);
         }
     }
 }
-

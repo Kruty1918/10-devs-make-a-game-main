@@ -1,4 +1,4 @@
-namespace Bonjoura.Inventory
+namespace Bonjoura.UI
 {
     public enum DefaultType
     {

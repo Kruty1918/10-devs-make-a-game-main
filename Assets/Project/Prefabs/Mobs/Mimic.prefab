@@ -162,7 +162,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 26eb7bd746a7a124b82178f70161308e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -460,7 +460,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7019677067480163527, guid: 9b5721eca7b22664aacf433afb616270, type: 3}
+  - {fileID: 2100000, guid: 26eb7bd746a7a124b82178f70161308e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -894,9 +894,11 @@ MonoBehaviour:
   cooldownHeal: 0
   cooldownDamage: 0
   _healthBar: {fileID: 5307992306020671973}
-  _losePanle: {fileID: 0}
+  _losePanel: {fileID: 0}
   _quickTipText: {fileID: 0}
   _resource: {fileID: 5521666806372653280}
+  _sfxPoolManager: {fileID: 0}
+  _dieSound: {fileID: 0}
 --- !u!114 &4082017662300580448
 MonoBehaviour:
   m_ObjectHideFlags: 0

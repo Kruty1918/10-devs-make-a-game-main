@@ -366,13 +366,14 @@ GameObject:
   - component: {fileID: 172605168399390360}
   - component: {fileID: 3234420940126498530}
   - component: {fileID: 9053974144576460793}
+  - component: {fileID: 4295901204703321212}
   - component: {fileID: 1013721946362903971}
   - component: {fileID: 971803536089409187}
   - component: {fileID: 6175216301921251058}
   - component: {fileID: 3383137788564773991}
   - component: {fileID: 2476927019987090055}
-  - component: {fileID: 4295901204703321212}
   - component: {fileID: 2061435205133451474}
+  - component: {fileID: 6613495887429202135}
   m_Layer: 8
   m_Name: Pig
   m_TagString: Untagged
@@ -441,6 +442,28 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &4295901204703321212
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809686427900412115}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 625a47c5557362149a493a6744988994, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1013721946362903971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,8 +484,9 @@ MonoBehaviour:
   _waitTime: 2
   _escapeDistance: 10
   _maxTimeToReachTarget: 5
+  friction: 5
   _sfxPoolManager: {fileID: 2061435205133451474}
-  _mobSpetialSound: {fileID: 0}
+  _mobSpecialSound: {fileID: 0}
   _noticedThePlayer: {fileID: 0}
 --- !u!114 &971803536089409187
 MonoBehaviour:
@@ -482,7 +506,7 @@ MonoBehaviour:
   cooldownHeal: 0
   cooldownDamage: 0
   _healthBar: {fileID: 553811143456542124}
-  _losePanle: {fileID: 0}
+  _losePanel: {fileID: 0}
   _quickTipText: {fileID: 0}
   _resource: {fileID: 2476927019987090055}
   _sfxPoolManager: {fileID: 2061435205133451474}
@@ -565,28 +589,6 @@ MonoBehaviour:
   durationAnimation: 0.2
   ease: 2
   unscaling: {x: 0.1, y: 0.1, z: 0.1}
---- !u!95 &4295901204703321212
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6809686427900412115}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 625a47c5557362149a493a6744988994, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2061435205133451474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,6 +602,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 6514283400644390503, guid: f2abc1709364f0b4492f4e61d70da0fa, type: 3}
+--- !u!114 &6613495887429202135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809686427900412115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdd28278df1b1644b5bcfe376c5e579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 971803536089409187}
+  mobMovement: {fileID: 1013721946362903971}
+  multiplierX: 15
+  multiplierY: 5
 --- !u!1 &7350755479859058852
 GameObject:
   m_ObjectHideFlags: 0

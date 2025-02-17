@@ -1,4 +1,4 @@
-using Bonjoura.Managers;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,26 +6,39 @@ namespace Bonjoura.Player
 {
     public sealed class PlayerJump : MonoBehaviour
     {
-        private float jumpForce = 1;
-        private void Jumping(InputAction.CallbackContext ob)
+        private float jumpMultiplier = 1f;
+
+        private void Jumping(InputAction.CallbackContext context)
         {
-            if (PlayerController.Instance.PlayerMoving.IsGrounded) 
-                PlayerController.Instance.PlayerMoving.AddVelocityY(Mathf.Sqrt(PlayerController.Instance.PlayerData.JumpForce * jumpForce * -2f * PlayerController.Instance.PlayerData.GravityForce));
+            var playerController = SM.Instance<PlayerController>();
+            var playerMoving = playerController.PlayerMoving;
+
+            if (playerMoving.IsGrounded)
+            {
+                float jumpForce = Mathf.Sqrt(playerController.PlayerData.JumpForce * jumpMultiplier * -2f * playerController.PlayerData.GravityForce);
+                playerMoving.AddVelocityY(jumpForce);
+            }
         }
 
         private void OnEnable()
         {
-            InputManager.Instance.Player.Jump.started += Jumping;
+            SM.Instance<InputManager>().Player.Jump.started += Jumping;
         }
-        
+
         private void OnDisable()
         {
-            InputManager.Instance.Player.Jump.started -= Jumping;
+            if (SM.HasSingleton<InputManager>())
+            {
+                SM.Instance<InputManager>().Player.Jump.started -= Jumping;
+            }
         }
-        public void UpdateMovingJump(float _jump)
+
+        /// <summary>
+        /// Оновлює множник сили стрибка.
+        /// </summary>
+        public void UpdateJumpMultiplier(float multiplier)
         {
-            jumpForce = _jump;
+            jumpMultiplier = multiplier;
         }
     }
 }
-

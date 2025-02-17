@@ -1,42 +1,45 @@
-using Bonjoura.Managers;
 using Bonjoura.Player;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SGS29.Utilities;
 
-public class LandCloseOpenPanel : MonoBehaviour
+namespace Bonjoura.UI
 {
-    [SerializeField] private GameObject _menuToOpen;
-    [SerializeField] private InputAction _openCloseAction;
-
-    public bool IsOpened { get; private set; }
-
-    private void Awake()
+    public class LandCloseOpenPanel : MonoBehaviour
     {
-        IsOpened = _menuToOpen.activeSelf;
-    }
+        [SerializeField] private GameObject _menuToOpen;
+        [SerializeField] private InputAction _openCloseAction;
 
-    private void OnEnable()
-    {
-        _openCloseAction.Enable();
-        _openCloseAction.performed += Toggle;
-    }
+        public bool IsOpened { get; private set; }
 
-    private void OnDisable()
-    {
-        _openCloseAction.Disable();
-        _openCloseAction.performed -= Toggle;
-    }
+        private void Awake()
+        {
+            IsOpened = _menuToOpen.activeSelf;
+        }
 
-    private void Toggle(InputAction.CallbackContext callbackContext)
-    {
-        // Debug.Log($"MenuOpenClose toggle {InputManager.Instance.CursorShowed}");
-        if (InputManager.Instance.CursorShowed && IsOpened == false)
-            return;
+        private void OnEnable()
+        {
+            _openCloseAction.Enable();
+            _openCloseAction.performed += Toggle;
+        }
 
-        IsOpened = !IsOpened;
-        _menuToOpen.SetActive(IsOpened);
-        PlayerController.Instance.FPSCamera.enabled = !IsOpened;
-        InputManager.Instance.ChangeCursorState(IsOpened);
+        private void OnDisable()
+        {
+            _openCloseAction.Disable();
+            _openCloseAction.performed -= Toggle;
+        }
+
+        private void Toggle(InputAction.CallbackContext callbackContext)
+        {
+            // Debug.Log($"MenuOpenClose toggle {SM.Instance<InputManager>().CursorShowed}");
+            if (SM.Instance<InputManager>().CursorShowed && IsOpened == false)
+                return;
+
+            IsOpened = !IsOpened;
+            _menuToOpen.SetActive(IsOpened);
+            SM.Instance<PlayerController>().FPSCamera.enabled = !IsOpened;
+
+            SM.Instance<InputManager>().ChangeCursorState(IsOpened);
+        }
     }
 }

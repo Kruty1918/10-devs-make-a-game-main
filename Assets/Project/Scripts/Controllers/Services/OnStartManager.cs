@@ -1,16 +1,18 @@
+using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
-namespace Bonjoura.Managers
+namespace Bonjoura.Services
 {
     public sealed class OnStartManager : MonoBehaviour
     {
-        [Header("Cursor")] 
+        [Header("Cursor")]
         [SerializeField] private bool hideCursorByStart = true;
-        
+
         private void Awake()
         {
-            if (hideCursorByStart) InputManager.Instance.HideCursor();
-            else InputManager.Instance.ShowCursor();
+            if (hideCursorByStart) SM.Instance<InputManager>().HideCursor();
+            else SM.Instance<InputManager>().ShowCursor();
         }
     }
 }

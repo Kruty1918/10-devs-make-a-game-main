@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using SGS29.Utilities;
 
 public class UpgradeCard : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] private TMP_Text _needExpText;
     [Space]
     public UnityEvent OnUpgrade;
-    
+
     public bool IsUnlocked { get; private set; }
     public bool IsPurchased { get; private set; }
 
@@ -44,10 +45,10 @@ public class UpgradeCard : MonoBehaviour
 
     public void Upgrade()
     {
-        if(!IsUnlocked || IsPurchased) return;
-        
-        if(TrySpendNeededItems() == false) return;
-        
+        if (!IsUnlocked || IsPurchased) return;
+
+        if (TrySpendNeededItems() == false) return;
+
         OnUpgrade?.Invoke();
         IsPurchased = true;
         UpdateUI();
@@ -62,20 +63,20 @@ public class UpgradeCard : MonoBehaviour
 
     private void UnlockNextUpgrades()
     {
-        if(_toUnlock == null || _toUnlock.Count == 0)
+        if (_toUnlock == null || _toUnlock.Count == 0)
             return;
-        
+
         foreach (var upgradeCard in _toUnlock)
         {
-            if(upgradeCard != null)
+            if (upgradeCard != null)
                 upgradeCard.Unlock();
         }
     }
 
     private bool TrySpendNeededItems()
     {
-        var inventory = PlayerController.Instance.ItemInventory;
-        int xp = PlayerController.Instance.GetExperienceScript().experience;
+        var inventory = SM.Instance<PlayerController>().ItemInventory;
+        int xp = SM.Instance<PlayerController>().GetExperienceScript().experience;
         int quantity = inventory.GetItemQuantity(_needItem);
         Debug.Log(quantity);
         bool canRemove = quantity >= _neededQuantity;
@@ -90,7 +91,7 @@ public class UpgradeCard : MonoBehaviour
             {
                 inventory.RemoveItem(_needItem);
             }
-            PlayerController.Instance.GetExperienceScript().RemoveXP(_needXp);
+            SM.Instance<PlayerController>().GetExperienceScript().RemoveXP(_needXp);
         }
         return canRemove;
     }

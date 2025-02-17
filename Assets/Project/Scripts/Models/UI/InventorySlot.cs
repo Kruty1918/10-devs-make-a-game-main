@@ -1,21 +1,21 @@
 using UnityEngine;
 
-namespace Bonjoura.Inventory
+namespace Bonjoura.UI
 {
     [System.Serializable]
     public class InventorySlot
     {
         public BaseInventoryItem item;
         public int quantity;
-        
-        public bool IsEmpty => !item; 
+
+        public bool IsEmpty => !item;
 
         public void ClearSlot()
         {
             item = null;
             quantity = 0;
         }
-        
+
         public bool CanStack(BaseInventoryItem newItem)
         {
             return item == newItem && item.CanStacking && quantity < item.MaxStack;

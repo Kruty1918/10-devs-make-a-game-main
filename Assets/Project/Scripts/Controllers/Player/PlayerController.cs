@@ -1,20 +1,16 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Services;
-using Bonjoura.Triggers;
 using UnityEngine;
+using SGS29.Utilities;
 
 namespace Bonjoura.Player
 {
-    public sealed class PlayerController : MonoBehaviour
+    public sealed class PlayerController : MonoSingleton<PlayerController>
     {
-        private static PlayerController _playerController;
-
-        public static PlayerController Instance => _playerController;
-        
         [Header("Data")]
         [SerializeField] private PlayerData playerData;
-        
-        [Header("References")] 
+
+        [Header("References")]
         [SerializeField] private PlayerMoving playerMoving;
         [SerializeField] private PlayerJump playerJump;
         [SerializeField] private FPSCamera fpsCamera;
@@ -26,13 +22,13 @@ namespace Bonjoura.Player
 
         [SerializeField] private Experience XPScript;
         [SerializeField] private ParticleSystem XPparticle;
-        
+
         public PlayerData PlayerData => playerData;
         public FPSCamera FPSCamera => fpsCamera;
-        
+
         public PlayerHungerSystem PlayerHungerSystem => playerHungerSystem;
         public PlayerTemperature PlayerTemperatureSystem => playerTemperatureSystem;
-        
+
         public PlayerMoving PlayerMoving => playerMoving;
         public PlayerJump PlayerJump => playerJump;
         public ItemInventory ItemInventory => itemInventory;
@@ -42,14 +38,5 @@ namespace Bonjoura.Player
 
         public ParticleSystem GetXPParticle() => XPparticle;
         public Experience GetExperienceScript() => XPScript;
-        private void Awake()
-        {
-            if (_playerController)
-            {
-                Destroy(this);
-                return;
-            }
-            _playerController = this;
-        }
     }
 }

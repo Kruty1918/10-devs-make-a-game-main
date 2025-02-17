@@ -1,17 +1,23 @@
-using Bonjoura.Managers;
 using Bonjoura.Services;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Player
 {
     public sealed class PlayerHealth : Health
     {
-        public void PlayerDeth(GameObject LosePanle, TMPro.TextMeshProUGUI quickTipText, string reason)
+        void Awake()
         {
-            LosePanle.SetActive(true);
-            quickTipText.text = PosthumousTipGenerator.Instance.GenerateQuickTip(reason);
-            InputManager.Instance.ChangeCursorState(true);
-            PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+            OnDieEvent += PlayerDeath;
+        }
+
+
+        public void PlayerDeath(string reason)
+        {
+            _losePanel.Open(true);
+            _quickTipText.text = PosthumousTipGenerator.Instance.GenerateQuickTip(reason);
+            SM.Instance<InputManager>().ChangeCursorState(true);
+            SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
             Time.timeScale = 0;
         }
     }

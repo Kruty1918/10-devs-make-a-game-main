@@ -1,4 +1,5 @@
 using Bonjoura.Craft;
+using Bonjoura.Utilities;
 using System;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Bonjoura.UI.Craft
 
         private string quantityFormat;
         private MaterialItem materialItem;
-        
+
         private void Awake()
         {
             quantityFormat = quantityText.text;
@@ -39,7 +40,7 @@ namespace Bonjoura.UI.Craft
 
         private void ApplyTextColor()
         {
-            if (MaterialItemChecker.Instance.IsExist(materialItem))
+            if (MaterialItemChecker.IsExist(materialItem))
             {
                 quantityText.color = Color.white;
             }

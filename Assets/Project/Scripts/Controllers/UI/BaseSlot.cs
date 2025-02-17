@@ -1,4 +1,4 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,13 +9,13 @@ namespace Bonjoura.UI.Inventory
 {
     public abstract class BaseSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [Header("References")] 
+        [Header("References")]
         [SerializeField] private GameObject groupUI;
         [SerializeField] private Image itemIcon;
         [SerializeField] private TMP_Text itemCountText;
 
         private bool _isMouseEnter;
-        
+
         private InventorySlot _itemInSlot;
 
         private int _slotIndex;
@@ -25,7 +25,7 @@ namespace Bonjoura.UI.Inventory
 
         public InventorySlot ItemInSlot => _itemInSlot;
         public int SlotIndex => _slotIndex;
-        
+
         private void Awake()
         {
             groupUI.SetActive(false);
@@ -40,7 +40,7 @@ namespace Bonjoura.UI.Inventory
         protected abstract void Init();
 
         public void SetIndex(int index) => _slotIndex = index;
-        
+
         public void ClearSlot()
         {
             _itemInSlot = null;
@@ -77,7 +77,7 @@ namespace Bonjoura.UI.Inventory
         {
             InventorySlot item1 = fromSlot.ItemInSlot;
             InventorySlot item2 = toSlot.ItemInSlot;
-            
+
 
             if (item1 != null)
             {
@@ -88,7 +88,7 @@ namespace Bonjoura.UI.Inventory
             {
                 toSlot.ClearSlot();
             }
-            
+
             if (item2 != null)
             {
                 fromSlot.SetItem(item2);

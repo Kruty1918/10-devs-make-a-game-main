@@ -1,15 +1,16 @@
-using Bonjoura.Inventory;
-using Bonjoura.Managers;
+using Bonjoura.UI;
 using Bonjoura.Player;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using SGS29.Utilities;
+using System;
 
 namespace Bonjoura.UI.Inventory
 {
-    public sealed class InventoryUI : MonoBehaviour
+    public sealed class InventoryUI : MonoSingleton<InventoryUI>
     {
         [SerializeField] private QuickSlot[] quickSlots;
         [SerializeField] private BaseSlot[] baseSlots;
@@ -17,6 +18,7 @@ namespace Bonjoura.UI.Inventory
         [SerializeField] private Transform arrowTransform;
         [SerializeField] private Image _itemSpriteInHand;
         [SerializeField] private MenuOpenClose _openClose;
+        public event System.Action<SlotData> OnSlotChanged;
 
         [SerializeField] private float _scrollDelay;
         private bool isDelay = false;
@@ -37,9 +39,9 @@ namespace Bonjoura.UI.Inventory
 
         private void Update()
         {
-            if (InputManager.Instance.CurrentControls == Controls.KeyboardAndMouse) ChangeQuickSlot();
+            if (SM.Instance<InputManager>().CurrentControls == Controls.KeyboardAndMouse) ChangeQuickSlot();
 
-            if (InputManager.Instance.ScrollAxis != Vector2.zero)
+            if (SM.Instance<InputManager>().ScrollAxis != Vector2.zero)
                 ChangeSlotByScroll();
 
             MoveItem();
@@ -50,9 +52,9 @@ namespace Bonjoura.UI.Inventory
             if (!_openClose.IsOpened) return;
 
             if (_selectedSlot)
-                _selectedSlot.GroupUI.transform.position = new Vector3(InputManager.Instance.GetMousePosition().x, InputManager.Instance.GetMousePosition().y, _selectedSlot.GroupUI.transform.position.z);
+                _selectedSlot.GroupUI.transform.position = new Vector3(SM.Instance<InputManager>().GetMousePosition().x, SM.Instance<InputManager>().GetMousePosition().y, _selectedSlot.GroupUI.transform.position.z);
 
-            if (!InputManager.Instance.Player.Attack.WasPressedThisFrame()) return;
+            if (!SM.Instance<InputManager>().Player.Attack.WasPressedThisFrame()) return;
             foreach (var baseSlot in baseSlots)
             {
                 if (!baseSlot.IsMouseEnter) continue;
@@ -67,7 +69,7 @@ namespace Bonjoura.UI.Inventory
                 {
                     _selectedSlot.GroupUI.transform.localPosition = new Vector3(0, 0, _selectedSlot.GroupUI.transform.position.z);
                     BaseSlot.ReplaceItem(_selectedSlot, baseSlot);
-                    PlayerController.Instance.ItemInventory.SwapSlots(_selectedSlot.SlotIndex, baseSlot.SlotIndex);
+                    SM.Instance<PlayerController>().ItemInventory.SwapSlots(_selectedSlot.SlotIndex, baseSlot.SlotIndex);
                     _selectedSlot = null;
 
                     PutInHandItem();
@@ -77,13 +79,12 @@ namespace Bonjoura.UI.Inventory
             }
         }
 
-
         private void ChangeSlotByScroll()
         {
             if (!isDelay)
             {
                 isDelay = true;
-                int axis = (int)Mathf.Sign(InputManager.Instance.ScrollAxis.y);
+                int axis = (int)Mathf.Sign(SM.Instance<InputManager>().ScrollAxis.y);
                 _previousSelectedQuickSlotIndex = _currentSelectQuickSlotIndex;
                 _currentSelectQuickSlotIndex -= axis;
 
@@ -110,7 +111,7 @@ namespace Bonjoura.UI.Inventory
         {
             for (int i = 0; i < quickSlots.Length; i++)
             {
-                if (!InputManager.Instance.NumberKeys[i + 1].wasPressedThisFrame) continue;
+                if (!SM.Instance<InputManager>().NumberKeys[i + 1].wasPressedThisFrame) continue;
                 if (i == _currentSelectQuickSlotIndex) return;
 
                 quickSlots[_currentSelectQuickSlotIndex].Deselect();
@@ -128,7 +129,7 @@ namespace Bonjoura.UI.Inventory
         private void SelectQuickSlot(int index)
         {
             quickSlots[index].SelectSlot();
-            PlayerController.Instance.ItemInventory.SelectSlot(index);
+            SM.Instance<PlayerController>().ItemInventory.SelectSlot(index);
             _currentSelectQuickSlotIndex = index;
 
             PutInHandItem();
@@ -138,16 +139,16 @@ namespace Bonjoura.UI.Inventory
         {
             QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
             if (quickSlot.ItemInSlot == null) return;
-            PlayerController.Instance.ItemInventory.RemoveSelectedItemWithDropped();
+            SM.Instance<PlayerController>().ItemInventory.RemoveSelectedItemWithDropped();
 
             PutInHandItem();
         }
 
         private void RefreshSlots()
         {
-            for (int i = 0; i < PlayerController.Instance.ItemInventory.InventorySlots.Count; i++)
+            for (int i = 0; i < SM.Instance<PlayerController>().ItemInventory.InventorySlots.Count; i++)
             {
-                var slot = PlayerController.Instance.ItemInventory.InventorySlots[i];
+                var slot = SM.Instance<PlayerController>().ItemInventory.InventorySlots[i];
                 var slotUI = baseSlots[i];
 
                 if (slot.IsEmpty)
@@ -164,32 +165,6 @@ namespace Bonjoura.UI.Inventory
             }
         }
 
-        private void ReplaceSlots()
-        {
-            for (int i = 0; i < PlayerController.Instance.ItemInventory.InventorySlots.Count; i++)
-            {
-                var slot = PlayerController.Instance.ItemInventory.InventorySlots[i];
-                var slotUI = baseSlots[i];
-
-                if (slot.IsEmpty)
-                {
-                    baseSlots[i].ClearSlot();
-                }
-                else
-                {
-                    slotUI.SetItem(slot);
-                    slotUI.UpdateValue();
-                }
-            }
-        }
-
-        public string ReturnItemName()
-        {
-            QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
-
-            return quickSlot.ItemInSlot.item.name.ToString();
-        }
-
         public QuickSlot ReturnSelectedItem()
         {
             QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
@@ -204,9 +179,24 @@ namespace Bonjoura.UI.Inventory
             if (quickSlot.ItemInSlot != null)
             {
                 if (quickSlot.ItemInSlot.item != null)
+                {
                     _itemSpriteInHand.sprite = quickSlot.ItemInSlot.item.ItemIcon;
+
+                    // Створення об'єкта SlotData
+                    var slotData = new SlotData(true);
+
+                    // Виклик події для сповіщення про зміну слота
+                    OnSlotChanged?.Invoke(slotData);
+                }
                 else
-                    _itemSpriteInHand.color = new Color(1, 1, 1, 0); ;
+                {
+                    _itemSpriteInHand.color = new Color(1, 1, 1, 0);
+                    // Створення об'єкта SlotData
+                    var slotData = new SlotData(true);
+
+                    // Виклик події для сповіщення про зміну слота
+                    OnSlotChanged?.Invoke(slotData);
+                }
 
                 _itemSpriteInHand.SetNativeSize();
 
@@ -220,31 +210,28 @@ namespace Bonjoura.UI.Inventory
             else
             {
                 _itemSpriteInHand.color = new Color(1, 1, 1, 0);
-            }
-        }
 
-        public BaseInventoryItem GetItemFromSelectedQuickSlot()
-        {
-            QuickSlot selectedQuickSlot = quickSlots[_currentSelectQuickSlotIndex];
-            if (selectedQuickSlot.ItemInSlot != null)
-            {
-                return selectedQuickSlot.ItemInSlot.item; 
+                // Створення об'єкта SlotData
+                var slotData = new SlotData(false);
+
+                // Виклик події для сповіщення про зміну слота
+                OnSlotChanged?.Invoke(slotData);
             }
-            return null; 
         }
 
         private void OnEnable()
         {
-            PlayerController.Instance.ItemInventory.OnRefreshItemEvent += RefreshSlots;
+            SM.Instance<PlayerController>().ItemInventory.OnRefreshItemEvent += RefreshSlots;
 
-            InputManager.Instance.Player.DropItem.started += DropItemFromQuickSlot;
+            SM.Instance<InputManager>().Player.DropItem.started += DropItemFromQuickSlot;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.ItemInventory.OnRefreshItemEvent -= RefreshSlots;
+            SM.Instance<PlayerController>().ItemInventory.OnRefreshItemEvent -= RefreshSlots;
 
-            InputManager.Instance.Player.DropItem.started -= DropItemFromQuickSlot;
+            if (SM.HasSingleton<InputManager>())
+                SM.Instance<InputManager>().Player.DropItem.started -= DropItemFromQuickSlot;
         }
     }
 }
