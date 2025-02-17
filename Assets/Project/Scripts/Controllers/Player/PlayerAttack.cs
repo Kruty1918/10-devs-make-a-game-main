@@ -19,8 +19,11 @@ namespace Bonjoura.Player
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Attack();
-                OnAttack?.Invoke();
+                if (CanAttack())
+                {
+                    Attack();
+                    OnAttack?.Invoke();
+                }
             }
         }
 
@@ -35,6 +38,11 @@ namespace Bonjoura.Player
                     enemy.GetComponent<Health>().Damage(_damage, "player");
                 }
             }
+        }
+
+        private bool CanAttack()
+        {
+            return GameStates.State == GameState.Played;
         }
 
 #if UNITY_EDITOR

@@ -10,9 +10,12 @@ namespace Bonjoura.UI
     /// </summary>
     public class MenuOpenClose : MonoBehaviour
     {
+        [Header("Main")]
         [SerializeField] private GameObject _menuToOpen;
         [SerializeField] private InputAction _openCloseAction;
 
+        [Space()]
+        [Header("States")]
         [SerializeField] private GameState openGameState = GameState.Paused; // State when the menu is opened
         [SerializeField] private GameState closeGameState = GameState.Played; // State when the menu is closed
 
@@ -43,12 +46,6 @@ namespace Bonjoura.UI
         /// </summary>
         private void Toggle(InputAction.CallbackContext callbackContext)
         {
-            if (SM.Instance<InputManager>().CursorShowed && !IsOpened)
-            {
-                // Close all other open menus if this one is being opened
-                CloseAllMenus();
-            }
-
             // Toggle the menu visibility
             IsOpened = !IsOpened;
             _menuToOpen.SetActive(IsOpened);
@@ -75,20 +72,6 @@ namespace Bonjoura.UI
 
                 // Set the game state to the "close" state when the menu is closed
                 GameStates.SetState(closeGameState);
-            }
-        }
-
-        /// <summary>
-        /// Closes all other open menus.
-        /// </summary>
-        private void CloseAllMenus()
-        {
-            foreach (var menu in FindObjectsOfType<MenuOpenClose>())
-            {
-                if (menu != this && menu.IsOpened)
-                {
-                    menu.Close();
-                }
             }
         }
     }
