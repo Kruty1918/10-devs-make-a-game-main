@@ -3,6 +3,7 @@ using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System;
 
 namespace Bonjoura.UI
 {
@@ -19,6 +20,7 @@ namespace Bonjoura.UI
         [Header("States")]
         [SerializeField] private GameState openGameState = GameState.Paused; // State when the menu is opened
         [SerializeField] private GameState closeGameState = GameState.Played; // State when the menu is closed
+        [SerializeField] private GameStateGroup stateConditions = GameStateGroup.Played | GameStateGroup.Paused; // Multiple selectable states
 
         public bool IsOpened { get; private set; }
 
@@ -64,7 +66,7 @@ namespace Bonjoura.UI
         /// <param name="closeOthers">If true, closes all other open menus.</param>
         public void Open(bool closeOthers)
         {
-            if (IsOpened) return;
+            if (IsOpened || !Condition()) return;
 
             if (closeOthers)
             {
@@ -79,6 +81,38 @@ namespace Bonjoura.UI
 
             GameStates.SetState(openGameState);
             activePanels.Add(this);
+        }
+
+        private bool Condition()
+        {
+            int[] cond = GetEnumValues(stateConditions);
+            int state = (int)GameStates.State;
+
+            for (int i = 0; i < cond.Length; i++)
+            {
+                if (state == cond[i])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static int[] GetEnumValues<T>(T enumValue) where T : Enum
+        {
+            List<int> values = new List<int>();
+
+            foreach (T value in Enum.GetValues(typeof(T)))
+            {
+                int intValue = Convert.ToInt32(value);
+                if (intValue != 0 && (Convert.ToInt32(enumValue) & intValue) == intValue)
+                {
+                    values.Add(intValue);
+                }
+            }
+
+            return values.ToArray();
         }
 
         /// <summary>

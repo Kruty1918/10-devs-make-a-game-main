@@ -9309,7 +9309,7 @@ MonoBehaviour:
   cooldownHeal: 10
   cooldownDamage: 1
   _healthBar: {fileID: 1372774654}
-  _losePanel: {fileID: 560615844}
+  _losePanel: {fileID: 710916833}
   _quickTipText: {fileID: 749786619}
 --- !u!114 &456046727
 MonoBehaviour:
