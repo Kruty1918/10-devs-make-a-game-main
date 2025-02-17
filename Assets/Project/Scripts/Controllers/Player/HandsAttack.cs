@@ -2,7 +2,7 @@ using UnityEngine;
 using SGS29.Utilities;
 using Bonjoura.Player;
 
-namespace Bonjoura.UI.Inventory
+namespace Bonjoura.Player
 {
     public class HandsAttack : MonoBehaviour
     {
