@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Bonjoura.UI
 {
-    public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
     {
         // Задано кольори для дефолтного, виділеного та клікнутого станів
         [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f);  // сірий
@@ -38,11 +38,6 @@ namespace Bonjoura.UI
             Deselect();
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Select();
-        }
-
         public void OnPointerUp(PointerEventData eventData)
         {
             // Відтворюємо UnityEvent (OnClick)
@@ -50,11 +45,6 @@ namespace Bonjoura.UI
             PlayClickSound();
         }
 
-        private void Select()
-        {
-            SetColor(clickColor);
-            PlaySound(clickClip);
-        }
 
         private void Deselect()
         {
@@ -78,12 +68,14 @@ namespace Bonjoura.UI
 
         private void PlaySound(AudioClip clip)
         {
+            if (clip == null) return;
             audioSource.clip = clip;
             audioSource.Play();
         }
 
         private void PlayClickSound()
         {
+            if (clickClip == null) return;
             audioSource.clip = clickClip;
             audioSource.Play();
         }

@@ -42,6 +42,7 @@ namespace Bonjoura
             // Задаємо чорний колір панелі
             Image image = panelObject.AddComponent<Image>();
             image.color = new Color(0f, 0f, 0f, 0f); // Початково прозорий
+            image.raycastTarget = false;
 
             return rectTransform;
         }
@@ -101,7 +102,7 @@ namespace Bonjoura
         // Асинхронне завантаження сцени з анімацією
         public static async Task LoadSceneAsync(string sceneName, float timeIn = 0.5f, float timeOut = 0.8f)
         {
-            // Почати анімацію входу
+            // Почати анімацію входу (чорний екран)
             await AnimateInAsync(timeIn);
 
             // Завантаження сцени
@@ -111,7 +112,7 @@ namespace Bonjoura
         // Реальне асинхронне завантаження сцени
         private static async Task LoadSceneInternalAsync(string sceneName, float timeOut)
         {
-            // Очікуємо завершення анімації входу
+            // Ожидаємо завершення анімації входу
             await Task.Delay((int)(timeOut * 1000)); // Перетворюємо timeOut у мілісекунди для затримки
 
             // Завантаження сцени
@@ -128,7 +129,7 @@ namespace Bonjoura
                 await Task.Yield(); // Даємо можливість Unity оновити кадр
             }
 
-            // Після завантаження, почати анімацію виходу
+            // Після завантаження, почати анімацію виходу (чорний екран зникає)
             await AnimateOutAsync(timeOut);
         }
     }

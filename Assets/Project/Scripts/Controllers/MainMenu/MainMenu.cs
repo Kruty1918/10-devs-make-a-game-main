@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading.Tasks;
 using SGS29.Utilities;
 using UnityEngine;
@@ -14,12 +15,17 @@ namespace Bonjoura.UI
         public void Load()
         {
             playAnimator.Play(animationPlayName);
-            SceneLoader.LoadSceneAsync(gameScene).Wait();
+            StartCoroutine(LoadCoroutine());
         }
 
         public void Quit()
         {
             Application.Quit();
+        }
+
+        private IEnumerator LoadCoroutine()
+        {
+            yield return SceneLoader.LoadSceneAsync(gameScene, 1, 2);
         }
     }
 }

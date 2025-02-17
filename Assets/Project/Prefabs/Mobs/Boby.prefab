@@ -602,6 +602,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bd25da78d23ea9341b291886e8de15e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2967309834083846219}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bd25da78d23ea9341b291886e8de15e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8569325404817094161}
   m_SourcePrefab: {fileID: 100100000, guid: bd25da78d23ea9341b291886e8de15e6, type: 3}
 --- !u!1 &2584840365492589173 stripped
 GameObject:
@@ -691,9 +694,11 @@ MonoBehaviour:
   cooldownHeal: 0
   cooldownDamage: 0
   _healthBar: {fileID: 1767311542750793799}
-  _losePanle: {fileID: 0}
+  _losePanel: {fileID: 0}
   _quickTipText: {fileID: 0}
   _resource: {fileID: 4251662309463637088}
+  _sfxPoolManager: {fileID: 0}
+  _dieSound: {fileID: 0}
 --- !u!114 &826534667979131212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,9 +751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc58dd30a9457e49a28099eadf18723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 0}
-  _explosionForce: 50
-  _explosionRadius: 5
   _player: {fileID: 0}
   _mobAnimator: {fileID: 6037604421417427332}
   _detectionRadius: 10
@@ -756,9 +758,6 @@ MonoBehaviour:
   _waitTime: 2
   _maxTimeToReachTarget: 5
   _distanceToDetonate: 2.1
-  _materialRedEmission: {fileID: 2100000, guid: 01421055419d11e4eb6433cb9866f3c3, type: 2}
-  _emissionPower: -5
-  _particleSystemPrefab: {fileID: 6671150103142025685, guid: 4be81585fec310d4b913241f6cc8332d, type: 3}
   _sfxPoolManager: {fileID: 0}
   _explosionSFX: {fileID: 11400000, guid: 5200237977c7b0247b96b908beefc57d, type: 2}
   _noticedThePlayer: {fileID: 11400000, guid: b41d335b66b110e41bf764ae9854b3fb, type: 2}
@@ -775,9 +774,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 6514283400644390503, guid: f2abc1709364f0b4492f4e61d70da0fa, type: 3}
-  initialPoolSize: 5
-  soundList:
-  - {fileID: 11400000, guid: 5200237977c7b0247b96b908beefc57d, type: 2}
+--- !u!114 &8569325404817094161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2584840365492589173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5925bf8f849505e4d9230b9883f621db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6671150103142025685, guid: 4be81585fec310d4b913241f6cc8332d, type: 3}
 --- !u!4 &2924210764878612687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd25da78d23ea9341b291886e8de15e6, type: 3}

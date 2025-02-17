@@ -510,7 +510,13 @@ MonoBehaviour:
   _quickTipText: {fileID: 0}
   _resource: {fileID: 2476927019987090055}
   _sfxPoolManager: {fileID: 2061435205133451474}
-  _dieSound: {fileID: 11400000, guid: 84ceda9f644df144ab1361a56ee93848, type: 2}
+  _dieSound: {fileID: 11400000, guid: b717358beacc69449addeea82df06ead, type: 2}
+  OnDead:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6175216301921251058
 MonoBehaviour:
   m_ObjectHideFlags: 0
