@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Bonjoura.Services
@@ -84,5 +85,45 @@ namespace Bonjoura.Services
             }
         }
 #endif
+    }
+
+    [CustomEditor(typeof(LightingManager))]
+    public class LightingManagerEditor : Editor
+    {
+        private LightingManager _lightingManager;
+        private bool drawDayNightUI;
+
+        private void OnEnable()
+        {
+            _lightingManager = (LightingManager)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            // Прапорець для малювання UI дня і ночі
+            drawDayNightUI = EditorGUILayout.Toggle("Draw Day & Night UI", drawDayNightUI);
+
+            if (drawDayNightUI)
+            {
+                DrawDayNightUI();
+            }
+        }
+
+        private void DrawDayNightUI()
+        {
+            // Логіка для малювання UI дня і ночі, якщо прапорець активований
+            if (_lightingManager.IsItNight)
+            {
+                EditorGUILayout.LabelField("Night Time", EditorStyles.boldLabel);
+                // Ви можете додати малювання UI або інші ефекти для ночі
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Day Time", EditorStyles.boldLabel);
+                // Ви можете додати малювання UI або інші ефекти для дня
+            }
+        }
     }
 }
