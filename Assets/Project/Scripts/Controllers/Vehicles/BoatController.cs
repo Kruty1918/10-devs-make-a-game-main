@@ -107,7 +107,8 @@ namespace Bonjoura.Player
 
         private void OnDisable()
         {
-            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Sit;
+            if (SM.HasSingleton<PlayerController>())
+                SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Sit;
         }
     }
 }

@@ -49,7 +49,8 @@ public class LootBox : MonoBehaviour
 
     private void OnDisable()
     {
-        SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Getting;
+        if (SM.HasSingleton<PlayerController>())
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Getting;
     }
 }
 

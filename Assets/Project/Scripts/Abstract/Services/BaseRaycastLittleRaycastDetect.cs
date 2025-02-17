@@ -26,7 +26,8 @@ namespace Bonjoura.Services
 
         private void OnDisable()
         {
-            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= RaycastDetect;
+            if (SM.HasSingleton<PlayerController>())
+                SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= RaycastDetect;
         }
     }
 }
