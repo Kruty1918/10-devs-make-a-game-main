@@ -11,13 +11,14 @@ namespace Bonjoura.Services
     {
         [SerializeField] private bool _isPlayer = false;
 
-        [Header("Health")]
+        [Header("Health Settings")]
         [SerializeField] private float maximumHealth;
         [SerializeField] private float currentHealth;
 
         [SerializeField] private float cooldownHeal;
         [SerializeField] private float cooldownDamage;
 
+        [Header("UI Elements")]
         [SerializeField] private Slider _healthBar;
         [SerializeField] private GameObject _losePanel;
         [SerializeField] private TextMeshProUGUI _quickTipText;
@@ -38,72 +39,107 @@ namespace Bonjoura.Services
 
         private void Start()
         {
-            _healthBar.maxValue = MaximumHealth;
-            _healthBar.value = currentHealth;
+            InitializeHealth();
+        }
+
+        private void InitializeHealth()
+        {
+            currentHealth = maximumHealth;
+            UpdateHealthBar();
         }
 
         public bool Heal(int value)
         {
-            if (currentHealth >= maximumHealth) return false;
-            if (!_isCanHeal) return false;
-            if (!Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal)) return false;
-            _cooldownHealDelay = Time.time;
-            currentHealth += value;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maximumHealth);
-            OnHealEvent?.Invoke();
-            OnValueChange?.Invoke();
-            _isCanHeal = false;
-            _healthBar.value = currentHealth;
-
+            if (!CanHeal(value)) return false;
+            ApplyHealing(value);
             return true;
         }
 
+        private bool CanHeal(int value)
+        {
+            return currentHealth < maximumHealth && _isCanHeal && Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal);
+        }
+
+        private void ApplyHealing(int value)
+        {
+            _cooldownHealDelay = Time.time;
+            currentHealth = Mathf.Clamp(currentHealth + value, 0, maximumHealth);
+            _isCanHeal = false;
+
+            OnHealEvent?.Invoke();
+            OnValueChange?.Invoke();
+            UpdateHealthBar();
+        }
 
         public bool Damage(int value, string reason)
         {
-            if (!_isCanDamage) return false;
-            if (!Timer.SimpleTimer(_cooldownDamageDelay, cooldownDamage)) return false;
+            if (!CanTakeDamage()) return false;
+            ApplyDamage(value, reason);
+            return true;
+        }
+
+        private bool CanTakeDamage()
+        {
+            return _isCanDamage && Timer.SimpleTimer(_cooldownDamageDelay, cooldownDamage);
+        }
+
+        private void ApplyDamage(int value, string reason)
+        {
             _cooldownDamageDelay = Time.time;
-            currentHealth -= value;
-            _healthBar.value = currentHealth / maximumHealth;
-            // Canvas.ForceUpdateCanvases();  // trying to force update canvas                     //I have so much problems with HP Sided update ((
-            Debug.Log("HealthBar Value is set to currentHealth on object: " + gameObject);      //Idk wtf is going on
-            Debug.Log("HealthBar Value Updated to: " + _healthBar.value + " On slider: " + _healthBar);
-            currentHealth = Mathf.Clamp(currentHealth, 0, maximumHealth);                       //                                 9-th dev
+            currentHealth = Mathf.Clamp(currentHealth - value, 0, maximumHealth);
+
             OnDamageEvent?.Invoke();
             OnValueChange?.Invoke();
-            if (currentHealth > 0) return true;
+            UpdateHealthBar();
+
+            if (currentHealth <= 0)
+            {
+                HandleDeath(reason);
+            }
+        }
+
+        private void HandleDeath(string reason)
+        {
             OnDieEvent?.Invoke();
             _isCanDamage = false;
 
             if (_isPlayer)
             {
-                if (currentHealth <= 0)
-                {
-                    PlayerHealth playerHealth = gameObject.GetComponent<PlayerHealth>();
-                    playerHealth.PlayerDeath(_losePanel, _quickTipText, reason);
-                }
+                PlayerHealth playerHealth = GetComponent<PlayerHealth>();
+                playerHealth.PlayerDeath(_losePanel, _quickTipText, reason);
             }
-
-            return true;
         }
 
         public void SetMaximumHealth(int value)
         {
             maximumHealth = value;
             currentHealth = value;
+            UpdateHealthBar();
         }
+
         private void Update()
         {
-            if (_isPlayer)
+            if (_isPlayer && ShouldAutoHeal())
             {
-                if (SM.Instance<PlayerController>().PlayerHungerSystem.CurrentHunger >= 80 &&
-                SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature > 30f &&
-                SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature < 44f)
-                {
-                    if (Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal)) _isCanHeal = true;
-                    Heal(14); // 7 times for full health;
-                }
+                Heal(14);
+            }
+        }
+
+        private bool ShouldAutoHeal()
+        {
+            var player = SM.Instance<PlayerController>();
+            return player.PlayerHungerSystem.CurrentHunger >= 80 &&
+                   player.PlayerTemperatureSystem.Temperature > 30f &&
+                   player.PlayerTemperatureSystem.Temperature < 44f &&
+                   Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal);
+        }
+
+        private void UpdateHealthBar()
+        {
+            if (_healthBar != null)
+            {
+                _healthBar.maxValue = maximumHealth;
+                _healthBar.value = currentHealth;
             }
         }
     }
