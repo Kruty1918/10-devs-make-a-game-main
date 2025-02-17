@@ -1,16 +1,12 @@
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
 namespace Bonjoura.Player
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputManager : MonoSingleton<InputManager>
     {
-        private static InputManager _inputManager;
-
-        public static InputManager Instance => _inputManager;
-
-
         private InputSystem_Actions _inputActions;
 
         private bool _cursorShowed;
@@ -32,16 +28,10 @@ namespace Bonjoura.Player
         public InputSystem_Actions.PlayerActions Player => _inputActions.Player;
         public InputSystem_Actions.UIActions UI => _inputActions.UI;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance)
-            {
-                Destroy(gameObject);
-                return;
-            }
             _inputActions = new InputSystem_Actions();
             InitNumberKeys();
-            _inputManager = this;
             DontDestroyOnLoad(gameObject);
         }
 
