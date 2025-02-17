@@ -19,7 +19,7 @@ namespace Bonjoura.UI.Inventory
         private void SlotChanged(SlotData data)
         {
             // Logic 
-            armObj.SetActive(data.IsOccupied);
+            armObj.SetActive(!data.IsOccupied);
         }
     }
 }
