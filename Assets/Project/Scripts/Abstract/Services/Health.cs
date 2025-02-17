@@ -39,7 +39,6 @@ namespace Bonjoura.Services
         private void Start()
         {
             _healthBar.maxValue = MaximumHealth;
-            Debug.Log("max value set to MaxHP on object: " + gameObject);
             _healthBar.value = currentHealth;
         }
 
@@ -66,8 +65,8 @@ namespace Bonjoura.Services
             if (!Timer.SimpleTimer(_cooldownDamageDelay, cooldownDamage)) return false;
             _cooldownDamageDelay = Time.time;
             currentHealth -= value;
-            _healthBar.value = currentHealth;
-            Canvas.ForceUpdateCanvases();  // trying to force update canvas                     //I have so much problems with HP Sided update ((
+            _healthBar.value = currentHealth / maximumHealth;
+            // Canvas.ForceUpdateCanvases();  // trying to force update canvas                     //I have so much problems with HP Sided update ((
             Debug.Log("HealthBar Value is set to currentHealth on object: " + gameObject);      //Idk wtf is going on
             Debug.Log("HealthBar Value Updated to: " + _healthBar.value + " On slider: " + _healthBar);
             currentHealth = Mathf.Clamp(currentHealth, 0, maximumHealth);                       //                                 9-th dev
@@ -98,7 +97,9 @@ namespace Bonjoura.Services
         {
             if (_isPlayer)
             {
-                if (SM.Instance<PlayerController>().PlayerHungerSystem.CurrentHunger >= 80 && (SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature > 30f && SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature < 44f))
+                if (SM.Instance<PlayerController>().PlayerHungerSystem.CurrentHunger >= 80 &&
+                SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature > 30f &&
+                SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature < 44f)
                 {
                     if (Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal)) _isCanHeal = true;
                     Heal(14); // 7 times for full health;
