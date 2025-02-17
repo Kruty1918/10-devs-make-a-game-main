@@ -1,4 +1,4 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Player;
 using Bonjoura.UI.Inventory;
 using UnityEngine;

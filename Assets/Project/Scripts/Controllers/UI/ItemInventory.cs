@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using Bonjoura.Player;
 using UnityEngine;
 
-namespace Bonjoura.Inventory
+namespace Bonjoura.UI
 {
     public sealed class ItemInventory : MonoBehaviour
     {
         [SerializeField] private int maxSlots = 20;
-        
+
         [Header("Dropped item")]
         [SerializeField] private GameObject droppedItemReference;
         [SerializeField] private float forceDrop;
-        
+
         public readonly List<InventorySlot> InventorySlots = new();
 
         public event Action OnRefreshItemEvent;
-        
+
         private int _selectedSlotIndex = -1;
 
         private void Awake()
@@ -47,7 +47,7 @@ namespace Bonjoura.Inventory
         public int GetItemQuantity(BaseInventoryItem item)
         {
             int quantity = 0;
-            
+
             foreach (var slot in InventorySlots)
             {
                 if (slot.item == item)
@@ -55,7 +55,7 @@ namespace Bonjoura.Inventory
                     quantity += slot.quantity;
                 }
             }
-            
+
             return quantity;
         }
 
@@ -63,7 +63,7 @@ namespace Bonjoura.Inventory
         {
             if (RemoveItem(itemToRemove)) CreateDroppedItem(itemToRemove);
         }
-        
+
         public void RemoveSelectedItem()
         {
             CreateDroppedItem(InventorySlots[_selectedSlotIndex].item);
@@ -72,7 +72,7 @@ namespace Bonjoura.Inventory
                 InventorySlots[_selectedSlotIndex].ClearSlot();
             OnRefreshItemEvent?.Invoke();
         }
-        
+
         public void RemoveSelectedItemWithDropped()
         {
             CreateDroppedItem(InventorySlots[_selectedSlotIndex].item);
@@ -92,13 +92,13 @@ namespace Bonjoura.Inventory
         {
             GameObject droppedItemObject = Instantiate(droppedItemReference, PlayerController.Instance.FPSCamera.transform.position, Quaternion.identity);
             DroppedItem droppedItem = droppedItemObject.GetComponent<DroppedItem>();
-            
+
             droppedItem.SetSprite(item.ItemIcon);
             droppedItem.SetSpriteScale(item.IconScale);
             droppedItem.Drop(PlayerController.Instance.FPSCamera.transform.forward, forceDrop);
             droppedItem.SetItem(item);
         }
-        
+
         public bool AddItem(BaseInventoryItem newItem, int amount = 1)
         {
             foreach (var slot in InventorySlots)
@@ -110,7 +110,7 @@ namespace Bonjoura.Inventory
                     return true;
                 }
             }
-            
+
             foreach (var slot in InventorySlots)
             {
                 if (slot.IsEmpty)
@@ -121,14 +121,14 @@ namespace Bonjoura.Inventory
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
+
         public void SwapSlots(int indexA, int indexB)
         {
             if (indexA == indexB) return;
-        
+
             (InventorySlots[indexA], InventorySlots[indexB]) = (InventorySlots[indexB], InventorySlots[indexA]);
         }
 

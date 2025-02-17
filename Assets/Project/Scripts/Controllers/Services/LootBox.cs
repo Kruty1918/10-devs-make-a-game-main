@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Managers;
 using Bonjoura.Player;
 using UnityEngine;
@@ -13,9 +13,9 @@ public class LootBox : MonoBehaviour
     public int chanceForSpawnMimic = 20;
     private void CheckForSpawnMimic()
     {
-       
+
         int randomValue = UnityEngine.Random.Range(1, 101);
-        if (randomValue <= chanceForSpawnMimic) 
+        if (randomValue <= chanceForSpawnMimic)
         {
             Instantiate(_mimicPrefab, transform.position, Quaternion.identity, null);
             Destroy(gameObject);
@@ -35,18 +35,18 @@ public class LootBox : MonoBehaviour
     private void GiveLoot(List<Loot> loots)
     {
         var inventory = PlayerController.Instance.ItemInventory;
-        
+
         foreach (var loot in loots)
         {
             inventory.AddItem(loot.Item, loot.Quantity);
         }
     }
-        
+
     private void OnEnable()
     {
         PlayerController.Instance.InteractRaycast.OnRaycastEvent += Getting;
     }
-        
+
     private void OnDisable()
     {
         PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Getting;

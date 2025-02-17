@@ -1,4 +1,4 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using UnityEngine;
 
 namespace Bonjoura.Craft

@@ -1,5 +1,4 @@
 using Bonjoura.Services;
-using Bonjoura.Services;
 using UnityEngine;
 
 namespace Bonjoura.Enemy
@@ -18,7 +17,6 @@ namespace Bonjoura.Enemy
         }
         private void OnDie()
         {
-
             if (_dieSound != null) //You can just don`t asign the sound in Refs, so then it will not be played.
                 _sfxPoolManager.GiveSFXSourceToTheObject(_dieSound, gameObject);//SoundEffect
             else

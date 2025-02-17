@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Bonjoura.Inventory
+namespace Bonjoura.UI
 {
     [CreateAssetMenu(fileName = "BaseInventoryItem", menuName = "Scriptable Objects/BaseInventoryItem")]
     public sealed class BaseInventoryItem : ScriptableObject

@@ -1,4 +1,4 @@
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Managers;
 using Bonjoura.Player;
 using System.Collections;
@@ -228,9 +228,9 @@ namespace Bonjoura.UI.Inventory
             QuickSlot selectedQuickSlot = quickSlots[_currentSelectQuickSlotIndex];
             if (selectedQuickSlot.ItemInSlot != null)
             {
-                return selectedQuickSlot.ItemInSlot.item; 
+                return selectedQuickSlot.ItemInSlot.item;
             }
-            return null; 
+            return null;
         }
 
         private void OnEnable()

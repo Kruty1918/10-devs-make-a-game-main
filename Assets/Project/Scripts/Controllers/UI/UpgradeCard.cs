@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Bonjoura.Inventory;
+using Bonjoura.UI;
 using Bonjoura.Player;
 using TMPro;
 using UnityEngine;
@@ -25,7 +25,7 @@ public class UpgradeCard : MonoBehaviour
     [SerializeField] private TMP_Text _needExpText;
     [Space]
     public UnityEvent OnUpgrade;
-    
+
     public bool IsUnlocked { get; private set; }
     public bool IsPurchased { get; private set; }
 
@@ -44,10 +44,10 @@ public class UpgradeCard : MonoBehaviour
 
     public void Upgrade()
     {
-        if(!IsUnlocked || IsPurchased) return;
-        
-        if(TrySpendNeededItems() == false) return;
-        
+        if (!IsUnlocked || IsPurchased) return;
+
+        if (TrySpendNeededItems() == false) return;
+
         OnUpgrade?.Invoke();
         IsPurchased = true;
         UpdateUI();
@@ -62,12 +62,12 @@ public class UpgradeCard : MonoBehaviour
 
     private void UnlockNextUpgrades()
     {
-        if(_toUnlock == null || _toUnlock.Count == 0)
+        if (_toUnlock == null || _toUnlock.Count == 0)
             return;
-        
+
         foreach (var upgradeCard in _toUnlock)
         {
-            if(upgradeCard != null)
+            if (upgradeCard != null)
                 upgradeCard.Unlock();
         }
     }
