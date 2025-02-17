@@ -2,20 +2,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-namespace Bonjoura.Managers
+namespace Bonjoura.Player
 {
-    public enum Controls
-    {
-        Gamepad,
-        KeyboardAndMouse
-    }
     public sealed class InputManager : MonoBehaviour
     {
         private static InputManager _inputManager;
 
         public static InputManager Instance => _inputManager;
-        
-        
+
+
         private InputSystem_Actions _inputActions;
 
         private bool _cursorShowed;
@@ -36,7 +31,7 @@ namespace Bonjoura.Managers
 
         public InputSystem_Actions.PlayerActions Player => _inputActions.Player;
         public InputSystem_Actions.UIActions UI => _inputActions.UI;
-        
+
         private void Awake()
         {
             if (Instance)
@@ -49,7 +44,7 @@ namespace Bonjoura.Managers
             _inputManager = this;
             DontDestroyOnLoad(gameObject);
         }
-        
+
         private void InitNumberKeys()
         {
             if (Keyboard.current == null) return;
@@ -72,7 +67,7 @@ namespace Bonjoura.Managers
         {
             ControlChanged();
         }
-        
+
         private void OnEnable()
         {
             _inputActions?.Enable();
@@ -90,7 +85,7 @@ namespace Bonjoura.Managers
                 if (NumberKeys == null) InitNumberKeys();
                 if (Keyboard.current.IsPressed()) _currentControls = Controls.KeyboardAndMouse;
             }
-            
+
             if (Mouse.current != null)
             {
                 if (Mouse.current.delta.x.value != 0 || Mouse.current.delta.y.value != 0)
@@ -118,7 +113,7 @@ namespace Bonjoura.Managers
             if (!_isCanCursorShowed) return;
             Cursor.lockState = CursorLockMode.Confined;
         }
-        
+
         public void HideCursor()
         {
             _cursorShowed = false;
@@ -131,7 +126,7 @@ namespace Bonjoura.Managers
             if (state) ShowCursor();
             else HideCursor();
         }
-        
+
         public float GetMouseWheelValue()
         {
             if (CurrentControls != Controls.KeyboardAndMouse) return 0;
@@ -143,13 +138,13 @@ namespace Bonjoura.Managers
             if (CurrentControls != Controls.KeyboardAndMouse) return Vector3.zero;
             return Mouse.current.delta.value;
         }
-        
+
         public Vector3 GetMousePosition()
         {
             if (CurrentControls != Controls.KeyboardAndMouse) return Vector3.zero;
             return Mouse.current.position.value;
         }
-        
+
         public Vector3 GetMousePositionWorld(Camera mainCamera)
         {
             if (CurrentControls != Controls.KeyboardAndMouse) return Vector3.zero;

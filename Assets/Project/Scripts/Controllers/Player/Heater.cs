@@ -1,39 +1,42 @@
 using UnityEngine;
 using Bonjoura.Player;
 
-public class Heater : MonoBehaviour
+namespace Player
 {
-    private PlayerTemperature playerTemperature;
-    private Fireplace fireplace;
-    private void Start()
+    public class Heater : MonoBehaviour
     {
-        fireplace = GetComponentInParent<Fireplace>();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        playerTemperature = other.GetComponent<PlayerTemperature>();
-        if (fireplace.IsBurning)
+        private PlayerTemperature playerTemperature;
+        private Fireplace fireplace;
+        private void Start()
         {
-            playerTemperature.IsCloseToFireplace = true;
+            fireplace = GetComponentInParent<Fireplace>();
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (fireplace.IsBurning && playerTemperature != null)
+        private void OnTriggerEnter(Collider other)
         {
-            playerTemperature.IsCloseToFireplace = false;
+            playerTemperature = other.GetComponent<PlayerTemperature>();
+            if (fireplace.IsBurning)
+            {
+                playerTemperature.IsCloseToFireplace = true;
+            }
         }
-        playerTemperature = null;
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (!fireplace.IsBurning && playerTemperature != null)
+        private void OnTriggerExit(Collider other)
         {
-            playerTemperature.IsCloseToFireplace = false;
+            if (fireplace.IsBurning && playerTemperature != null)
+            {
+                playerTemperature.IsCloseToFireplace = false;
+            }
+            playerTemperature = null;
         }
-        else if (fireplace.IsBurning && playerTemperature != null)
+        private void OnTriggerStay(Collider other)
         {
-            playerTemperature.IsCloseToFireplace = true;
+            if (!fireplace.IsBurning && playerTemperature != null)
+            {
+                playerTemperature.IsCloseToFireplace = false;
+            }
+            else if (fireplace.IsBurning && playerTemperature != null)
+            {
+                playerTemperature.IsCloseToFireplace = true;
+            }
         }
     }
 }

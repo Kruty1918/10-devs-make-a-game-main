@@ -1,6 +1,5 @@
 using Bonjoura.UI;
 using Bonjoura.Services;
-using Bonjoura.Triggers;
 using UnityEngine;
 
 namespace Bonjoura.Player
