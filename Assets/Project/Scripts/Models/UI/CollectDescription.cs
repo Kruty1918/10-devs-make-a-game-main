@@ -12,11 +12,23 @@ namespace Bonjoura.UI
         private void Awake()
         {
             _droppedItem = GetComponent<DroppedItem>();
+            OnDescriptionActive += ActiveDescription;
         }
 
-        protected override void ActiveDescription()
+        private void ActiveDescription(bool active)
+        {
+            if (active) DrawText();
+            else CleatText();
+        }
+
+        private void DrawText()
         {
             info.text = $"Collect <b>{_droppedItem.ItemToGet.ItemName}</b>";
+        }
+
+        private void CleatText()
+        {
+            info.text = string.Empty;
         }
     }
 }
