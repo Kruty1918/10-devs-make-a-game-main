@@ -10144,6 +10144,7 @@ MonoBehaviour:
     m_Flags: 0
   openGameState: 1
   closeGameState: 0
+  stateConditions: 5
 --- !u!1 &545829409
 GameObject:
   m_ObjectHideFlags: 0
@@ -11100,6 +11101,7 @@ MonoBehaviour:
     m_Flags: 0
   openGameState: 1
   closeGameState: 0
+  stateConditions: 5
 --- !u!114 &623561984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12915,7 +12917,8 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   openGameState: 2
-  closeGameState: 0
+  closeGameState: 1
+  stateConditions: 5
 --- !u!1 &711661957
 GameObject:
   m_ObjectHideFlags: 0
@@ -16879,6 +16882,7 @@ MonoBehaviour:
     m_Flags: 0
   openGameState: 1
   closeGameState: 0
+  stateConditions: 5
 --- !u!1 &1077075878
 GameObject:
   m_ObjectHideFlags: 0
@@ -22754,6 +22758,7 @@ MonoBehaviour:
     m_Flags: 0
   openGameState: 1
   closeGameState: 0
+  stateConditions: 5
 --- !u!1 &1701965250
 GameObject:
   m_ObjectHideFlags: 0
@@ -24342,8 +24347,9 @@ MonoBehaviour:
       m_Action: Open Close
       m_Flags: 0
     m_Flags: 0
-  openGameState: 1
-  closeGameState: 0
+  openGameState: 2
+  closeGameState: 1
+  stateConditions: 5
 --- !u!1 &1875726351
 GameObject:
   m_ObjectHideFlags: 0
