@@ -15,9 +15,9 @@ namespace Bonjoura.Enemy
             _sfxPoolManager = GetComponentInChildren<SFXPoolManager>();
         }
 
-        private void OnDie()
+        private void OnDie(string reason)
         {
-            if (_dieSound != null) //You can just don`t asign the sound in Refs, so then it will not be played.
+            if (_dieSound != null) //You can just don`t assign the sound in Refs, so then it will not be played.
                 _sfxPoolManager.GiveSFXSourceToTheObject(_dieSound, gameObject);//SoundEffect
             else
                 Debug.Log("Sound, that you try to play is NULL. But its ok, if you don`t want to play sound for this mob :)");

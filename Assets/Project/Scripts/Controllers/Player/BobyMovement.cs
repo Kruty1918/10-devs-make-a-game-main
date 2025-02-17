@@ -40,6 +40,8 @@ namespace Bonjoura.Player
 
         private void Update()
         {
+            if (GameStates.State != GameState.Played)
+                return;
 
             if (_isBlowingUp)
             {

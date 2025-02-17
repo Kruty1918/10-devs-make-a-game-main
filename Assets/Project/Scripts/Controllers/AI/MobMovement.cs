@@ -41,6 +41,9 @@ namespace Bonjoura.AI
 
         private void Update()
         {
+            if (GameStates.State != GameState.Played)
+                return;
+
             if (_isEnemyMob)
             {
                 EnemyMovement();

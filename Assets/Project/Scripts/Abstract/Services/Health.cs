@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SGS29.Utilities;
+using UnityEngine.Events;
+using Bonjoura.UI;
 
 namespace Bonjoura.Services
 {
@@ -19,9 +21,9 @@ namespace Bonjoura.Services
         [SerializeField] private float cooldownDamage;
 
         [Header("UI Elements")]
-        [SerializeField] private Slider _healthBar;
-        [SerializeField] private GameObject _losePanel;
-        [SerializeField] private TextMeshProUGUI _quickTipText;
+        [SerializeField] protected Slider _healthBar;
+        [SerializeField] protected MenuOpenClose _losePanel;
+        [SerializeField] protected TextMeshProUGUI _quickTipText;
 
         private bool _isCanHeal = true;
         private bool _isCanDamage = true;
@@ -34,7 +36,7 @@ namespace Bonjoura.Services
 
         public event Action OnHealEvent;
         public event Action OnDamageEvent;
-        public event Action OnDieEvent;
+        public event Action<string> OnDieEvent;
         public event Action OnValueChange;
 
         private void Start()
@@ -100,14 +102,8 @@ namespace Bonjoura.Services
 
         private void HandleDeath(string reason)
         {
-            OnDieEvent?.Invoke();
+            OnDieEvent?.Invoke(reason);
             _isCanDamage = false;
-
-            if (_isPlayer)
-            {
-                PlayerHealth playerHealth = GetComponent<PlayerHealth>();
-                playerHealth.PlayerDeath(_losePanel, _quickTipText, reason);
-            }
         }
 
         public void SetMaximumHealth(int value)

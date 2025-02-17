@@ -27,58 +27,75 @@ namespace Bonjoura.UI
 
         private void Awake()
         {
-            // Initialize the IsOpened state based on the menu's current visibility
             IsOpened = _menuToOpen.activeSelf;
         }
 
         private void OnEnable()
         {
-            // Enable the input action and subscribe to its event
             _openCloseAction.Enable();
             _openCloseAction.performed += Toggle;
         }
 
         private void OnDisable()
         {
-            // Disable the input action and unsubscribe from its event
             _openCloseAction.Disable();
             _openCloseAction.performed -= Toggle;
         }
 
-        /// <summary>
-        /// Toggles the menu's visibility and changes the game state accordingly.
-        /// </summary>
         private void Toggle(InputAction.CallbackContext callbackContext)
         {
-            // If the menu is being opened, close all other active panels first
-            if (!IsOpened)
+            ToggleMenu();
+        }
+
+        /// <summary>
+        /// Opens or closes the menu.
+        /// </summary>
+        public void ToggleMenu()
+        {
+            if (IsOpened)
+                Close();
+            else
+                Open(true);
+        }
+
+        /// <summary>
+        /// Opens the menu. Optionally closes all other active panels.
+        /// </summary>
+        /// <param name="closeOthers">If true, closes all other open menus.</param>
+        public void Open(bool closeOthers)
+        {
+            if (IsOpened) return;
+
+            if (closeOthers)
             {
                 CloseAllOtherPanels();
             }
 
-            // Toggle the menu visibility
-            IsOpened = !IsOpened;
-            _menuToOpen.SetActive(IsOpened);
+            IsOpened = true;
+            _menuToOpen.SetActive(true);
 
-            // Enable or disable FPS camera based on the menu state
-            SM.Instance<PlayerController>().FPSCamera.enabled = !IsOpened;
+            SM.Instance<PlayerController>().FPSCamera.enabled = false;
+            SM.Instance<InputManager>().ChangeCursorState(true);
 
-            // Change the cursor state based on whether the menu is opened or closed
-            SM.Instance<InputManager>().ChangeCursorState(IsOpened);
+            GameStates.SetState(openGameState);
+            activePanels.Add(this);
+        }
 
-            // Set the game state based on whether the menu is opened or closed
-            GameStates.SetState(IsOpened ? openGameState : closeGameState);
+        /// <summary>
+        /// Closes the menu if it's open.
+        /// </summary>
+        public void Close()
+        {
+            if (!IsOpened) return;
 
-            // If the menu is opened, add this panel to the active list
-            if (IsOpened)
-            {
-                activePanels.Add(this);
-            }
-            else
-            {
-                // If the menu is closed, remove this panel from the active list
-                activePanels.Remove(this);
-            }
+            IsOpened = false;
+            _menuToOpen.SetActive(false);
+
+            SM.Instance<PlayerController>().FPSCamera.enabled = true;
+            SM.Instance<InputManager>().ChangeCursorState(false);
+
+            GameStates.SetState(closeGameState);
+            activePanels.Remove(this);
         }
 
         /// <summary>
@@ -86,35 +103,14 @@ namespace Bonjoura.UI
         /// </summary>
         private void CloseAllOtherPanels()
         {
-            // Create a copy of the active panels list to iterate over
             var panelsToClose = new List<MenuOpenClose>(activePanels);
 
-            // Loop through the copied list and close each panel
             foreach (var panel in panelsToClose)
             {
                 if (panel != this)
                 {
                     panel.Close();
                 }
-            }
-        }
-
-
-        /// <summary>
-        /// Closes the current menu if it's opened.
-        /// </summary>
-        public void Close()
-        {
-            if (IsOpened)
-            {
-                IsOpened = false;
-                _menuToOpen.SetActive(false);
-
-                // Set the game state to the "close" state when the menu is closed
-                GameStates.SetState(closeGameState);
-
-                // Remove this panel from the active list
-                activePanels.Remove(this);
             }
         }
     }

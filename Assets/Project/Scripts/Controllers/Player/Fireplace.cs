@@ -36,6 +36,15 @@ namespace Bonjoura.Player
 
         private void Update()
         {
+            HandleBurningTime();
+            HandleFireEffectAndLight();
+        }
+
+        /// <summary>
+        /// Manages the burning time and updates the burning state.
+        /// </summary>
+        private void HandleBurningTime()
+        {
             if (_burningTime > 0)
             {
                 _isBurning = true;
@@ -45,30 +54,54 @@ namespace Bonjoura.Player
             {
                 _isBurning = false;
             }
+        }
 
+        /// <summary>
+        /// Handles the fire effect and light based on the burning state.
+        /// </summary>
+        private void HandleFireEffectAndLight()
+        {
             if (_isBurning)
             {
-                if (!fireEffect.isPlaying)
-                {
-                    fireEffect.Play();
-                }
-                if (!_light.enabled)
-                {
-                    _light.enabled = true;
-                }
+                StartFireEffectAndLight();
             }
             else
             {
-                if (fireEffect.isPlaying)
-                {
-                    fireEffect.Stop();
-                }
-                if (_light.enabled)
-                {
-                    _light.enabled = false;
-                }
+                StopFireEffectAndLight();
             }
         }
+
+        /// <summary>
+        /// Starts the fire effect and enables the light when burning.
+        /// </summary>
+        private void StartFireEffectAndLight()
+        {
+            if (!fireEffect.isPlaying)
+            {
+                fireEffect.Play();
+            }
+            if (!_light.enabled)
+            {
+                _light.enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Stops the fire effect and disables the light when not burning.
+        /// </summary>
+        private void StopFireEffectAndLight()
+        {
+            if (fireEffect.isPlaying)
+            {
+                fireEffect.Stop();
+            }
+            if (_light.enabled)
+            {
+                _light.enabled = false;
+            }
+        }
+
+
         private void Using()
         {
             if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
