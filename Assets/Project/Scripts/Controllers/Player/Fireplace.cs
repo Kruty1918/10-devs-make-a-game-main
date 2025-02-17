@@ -1,5 +1,4 @@
 using Bonjoura.UI;
-using Bonjoura.Managers;
 using Bonjoura.UI.Inventory;
 using System.Collections;
 using UnityEngine;

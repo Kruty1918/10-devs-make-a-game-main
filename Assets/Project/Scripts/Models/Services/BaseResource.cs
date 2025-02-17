@@ -1,5 +1,4 @@
 using Bonjoura.UI;
-using Bonjoura.Managers;
 using Bonjoura.Player;
 using PrimeTween;
 using UnityEngine;

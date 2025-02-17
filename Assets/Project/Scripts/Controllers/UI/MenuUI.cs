@@ -1,4 +1,3 @@
-using Bonjoura.Managers;
 using Bonjoura.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;

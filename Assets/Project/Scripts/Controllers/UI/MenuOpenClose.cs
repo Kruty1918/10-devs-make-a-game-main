@@ -1,4 +1,3 @@
-using Bonjoura.Managers;
 using Bonjoura.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +6,7 @@ public class MenuOpenClose : MonoBehaviour
 {
     [SerializeField] private GameObject _menuToOpen;
     [SerializeField] private InputAction _openCloseAction;
-    
+
     public bool IsOpened { get; private set; }
 
     private void Awake()
@@ -30,15 +29,15 @@ public class MenuOpenClose : MonoBehaviour
     private void Toggle(InputAction.CallbackContext callbackContext)
     {
         // Debug.Log($"MenuOpenClose toggle {InputManager.Instance.CursorShowed}");
-        if(InputManager.Instance.CursorShowed && IsOpened == false)
+        if (InputManager.Instance.CursorShowed && IsOpened == false)
         {
-            foreach(MenuOpenClose thisopener in FindObjectsOfType<MenuOpenClose>())
+            foreach (MenuOpenClose thisopener in FindObjectsOfType<MenuOpenClose>())
             {
                 thisopener.Close();
             }
         }
-            
-        
+
+
         IsOpened = !IsOpened;
         _menuToOpen.SetActive(IsOpened);
         PlayerController.Instance.FPSCamera.enabled = !IsOpened;

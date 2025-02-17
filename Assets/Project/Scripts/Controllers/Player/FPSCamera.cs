@@ -1,4 +1,3 @@
-using Bonjoura.Managers;
 using UnityEngine;
 
 namespace Bonjoura.Player

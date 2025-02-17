@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Bonjoura.UI;
-using Bonjoura.Managers;
 using Bonjoura.Player;
 using UnityEngine;
 
