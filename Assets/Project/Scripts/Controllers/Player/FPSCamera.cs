@@ -20,6 +20,9 @@ namespace Bonjoura.Player
 
         private void CameraRotate()
         {
+            if (GameStates.State != GameState.Played)
+                return;
+
             _xRotation -= SM.Instance<InputManager>().LookAxis.y * sensitivity;
             _yRotation += SM.Instance<InputManager>().LookAxis.x * sensitivity;
 

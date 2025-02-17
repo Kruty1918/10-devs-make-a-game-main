@@ -17,12 +17,17 @@ namespace Bonjoura.AI
         [SerializeField] private float _escapeDistance = 10f;
         [SerializeField] private float _maxTimeToReachTarget = 5f;
 
+        [Header("Physics")]
+        [SerializeField] private float friction = 8f;
+
         private NavMeshAgent _agent;
         private bool _isWaiting;
         private bool _isChasing;
         private Vector3 _currentTarget;
         private float _speed;
         private float _timeSinceLastPathUpdate;
+        private Vector3 _currentForce = Vector3.zero;
+
 
         [Header("SFX")]
         [SerializeField] private SFXPoolManager _sfxPoolManager;
@@ -70,6 +75,8 @@ namespace Bonjoura.AI
                 _timeSinceLastPathUpdate = 0f;
                 _mobAnimator.SetBool("isRunning", false);
             }
+
+            ApplyExternalForces();
         }
 
         private void PeacefulMobMovement()
@@ -96,6 +103,28 @@ namespace Bonjoura.AI
                     _mobAnimator.SetBool("isRunning", false);
                     StartCoroutine(PatrolRoutine());
                 }
+            }
+        }
+
+        public void AddForce(Vector3 force, ForceMode mode = ForceMode.Force)
+        {
+            switch (mode)
+            {
+                case ForceMode.Force:
+                    _currentForce += force * Time.deltaTime;
+                    break;
+                case ForceMode.Impulse:
+                    _currentForce += force;
+                    break;
+            }
+        }
+
+        private void ApplyExternalForces()
+        {
+            if (_currentForce.magnitude > 0.1f)
+            {
+                transform.Translate(_currentForce * Time.deltaTime);
+                _currentForce = Vector3.Lerp(_currentForce, Vector3.zero, friction * Time.deltaTime);
             }
         }
 

@@ -41,6 +41,9 @@ namespace Bonjoura.Services
         }
         private void Getting()
         {
+            if (GameStates.State != GameState.Played)
+                return;
+
             if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
             if (!SM.Instance<InputManager>().Player.Attack.WasPressedThisFrame()) return;
 
@@ -70,6 +73,9 @@ namespace Bonjoura.Services
 
         public void Get()
         {
+            if (GameStates.State != GameState.Played)
+                return;
+
             _stepToGet++;
             Animation();
             if (_stepToGet < maxStepsToGet) return;
