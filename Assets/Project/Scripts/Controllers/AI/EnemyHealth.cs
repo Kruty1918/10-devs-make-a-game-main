@@ -13,8 +13,8 @@ namespace Bonjoura.Enemy
         private void Start()
         {
             _sfxPoolManager = GetComponentInChildren<SFXPoolManager>();
-
         }
+
         private void OnDie()
         {
             if (_dieSound != null) //You can just don`t asign the sound in Refs, so then it will not be played.

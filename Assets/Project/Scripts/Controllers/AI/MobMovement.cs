@@ -26,7 +26,7 @@ namespace Bonjoura.AI
 
         [Header("SFX")]
         [SerializeField] private SFXPoolManager _sfxPoolManager;
-        [SerializeField] private SfxSO _mobSpetialSound;
+        [SerializeField] private SfxSO _mobSpecialSound;
         [SerializeField] private SfxSO _noticedThePlayer;
 
         private void Start()
@@ -104,7 +104,7 @@ namespace Bonjoura.AI
             {
                 if (!_isChasing) //this need to be here, for only 1 sound effect and not 1 on each frame
                 {
-                    if (_noticedThePlayer != null) //You can just don`t asign the sound in Refs, so then it will not be played.
+                    if (_noticedThePlayer != null) //You can just don`t assign the sound in Refs, so then it will not be played.
                         _sfxPoolManager.GiveSFXSourceToTheObject(_noticedThePlayer, gameObject);//SoundEffect
                     else
                         Debug.Log("Sound, that you try to play is NULL. But its ok, if you don`t want to play sound for this mob :)");
