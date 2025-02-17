@@ -2,6 +2,7 @@ using Bonjoura.Player;
 using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace Bonjoura.UI
 {
@@ -20,6 +21,9 @@ namespace Bonjoura.UI
         [SerializeField] private GameState closeGameState = GameState.Played; // State when the menu is closed
 
         public bool IsOpened { get; private set; }
+
+        // Static list to track active panels
+        private static List<MenuOpenClose> activePanels = new List<MenuOpenClose>();
 
         private void Awake()
         {
@@ -46,6 +50,12 @@ namespace Bonjoura.UI
         /// </summary>
         private void Toggle(InputAction.CallbackContext callbackContext)
         {
+            // If the menu is being opened, close all other active panels first
+            if (!IsOpened)
+            {
+                CloseAllOtherPanels();
+            }
+
             // Toggle the menu visibility
             IsOpened = !IsOpened;
             _menuToOpen.SetActive(IsOpened);
@@ -58,7 +68,37 @@ namespace Bonjoura.UI
 
             // Set the game state based on whether the menu is opened or closed
             GameStates.SetState(IsOpened ? openGameState : closeGameState);
+
+            // If the menu is opened, add this panel to the active list
+            if (IsOpened)
+            {
+                activePanels.Add(this);
+            }
+            else
+            {
+                // If the menu is closed, remove this panel from the active list
+                activePanels.Remove(this);
+            }
         }
+
+        /// <summary>
+        /// Closes all active panels except for the current one.
+        /// </summary>
+        private void CloseAllOtherPanels()
+        {
+            // Create a copy of the active panels list to iterate over
+            var panelsToClose = new List<MenuOpenClose>(activePanels);
+
+            // Loop through the copied list and close each panel
+            foreach (var panel in panelsToClose)
+            {
+                if (panel != this)
+                {
+                    panel.Close();
+                }
+            }
+        }
+
 
         /// <summary>
         /// Closes the current menu if it's opened.
@@ -72,6 +112,9 @@ namespace Bonjoura.UI
 
                 // Set the game state to the "close" state when the menu is closed
                 GameStates.SetState(closeGameState);
+
+                // Remove this panel from the active list
+                activePanels.Remove(this);
             }
         }
     }
