@@ -23,7 +23,7 @@ namespace Bonjoura.UI.Inventory
 
         private void AttackPlay()
         {
-            animator.Play(animationName);
+            animator.Play(animationName, 0, 0f);
         }
     }
 }
