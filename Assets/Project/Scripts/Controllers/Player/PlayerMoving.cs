@@ -36,7 +36,10 @@ namespace Bonjoura.Player
         public Vector3 ForwardMove => _forwardMove;
         public Vector3 ForwardMoveWithoutVelocity => _forwardMoveWithoutVelocity;
 
-        public Vector3 Velocity => _velocity;
+        public Vector3 MoveVelocity => _moveVelocity;
+
+        public float VerticalVelocity => _isGround ? 0f : _velocity.y;
+
 
         private float speed = 1;
 
@@ -74,9 +77,9 @@ namespace Bonjoura.Player
         {
             _isGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-            if (_isGround && _velocity.y < 0)
+            if (_isGround)
             {
-                _velocity.y = -2f;
+                _velocity.y = Mathf.MoveTowards(_velocity.y, -2f, 50f * Time.deltaTime);
             }
         }
 

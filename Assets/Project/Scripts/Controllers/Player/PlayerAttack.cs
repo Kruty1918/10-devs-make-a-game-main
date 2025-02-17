@@ -1,21 +1,26 @@
+using System;
 using Bonjoura.Enemy;
 using Bonjoura.Services;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Bonjoura.Player
 {
-    public class PlayerAttack : MonoBehaviour
+    public class PlayerAttack : MonoSingleton<PlayerAttack>
     {
         [SerializeField] private float _attackDistance = 3.5f;
         [SerializeField] private int _damage = 10;
         [SerializeField] private LayerMask _enemyLayer;
+
+        public event Action OnAttack;
 
         private void Update()
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Attack();
+                OnAttack?.Invoke();
             }
         }
 
