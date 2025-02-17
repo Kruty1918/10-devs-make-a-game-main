@@ -4,7 +4,7 @@ using Bonjoura.Player;
 using PrimeTween;
 using UnityEngine;
 
-namespace Bonjoura.Resource
+namespace Bonjoura.Services
 {
     public sealed class BaseResource : MonoBehaviour
     {
