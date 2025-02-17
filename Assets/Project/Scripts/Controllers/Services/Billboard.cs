@@ -19,7 +19,7 @@ namespace Bonjoura.Services
             transform.LookAt(transform.position + _cameraTransform.rotation * Vector3.forward,
                 _cameraTransform.rotation * Vector3.up);
 
-            if (scaleMultiplier == 0) return; 
+            if (scaleMultiplier == 0) return;
             float distance = Vector3.Distance(transform.position, _cameraTransform.transform.position);
             transform.localScale = Vector3.one * (distance * scaleMultiplier);
         }
