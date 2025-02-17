@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Bonjoura.Services
+namespace Bonjoura.Utilities
 {
     public static class Timer
     {
