@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using SGS29.Utilities;
+using System;
 
 namespace Bonjoura.UI.Inventory
 {
-    public sealed class InventoryUI : MonoBehaviour
+    public sealed class InventoryUI : MonoSingleton<InventoryUI>
     {
         [SerializeField] private QuickSlot[] quickSlots;
         [SerializeField] private BaseSlot[] baseSlots;
@@ -17,6 +18,7 @@ namespace Bonjoura.UI.Inventory
         [SerializeField] private Transform arrowTransform;
         [SerializeField] private Image _itemSpriteInHand;
         [SerializeField] private MenuOpenClose _openClose;
+        public event System.Action<SlotData> OnSlotChanged;
 
         [SerializeField] private float _scrollDelay;
         private bool isDelay = false;
@@ -76,7 +78,6 @@ namespace Bonjoura.UI.Inventory
                 }
             }
         }
-
 
         private void ChangeSlotByScroll()
         {
@@ -164,32 +165,6 @@ namespace Bonjoura.UI.Inventory
             }
         }
 
-        private void ReplaceSlots()
-        {
-            for (int i = 0; i < SM.Instance<PlayerController>().ItemInventory.InventorySlots.Count; i++)
-            {
-                var slot = SM.Instance<PlayerController>().ItemInventory.InventorySlots[i];
-                var slotUI = baseSlots[i];
-
-                if (slot.IsEmpty)
-                {
-                    baseSlots[i].ClearSlot();
-                }
-                else
-                {
-                    slotUI.SetItem(slot);
-                    slotUI.UpdateValue();
-                }
-            }
-        }
-
-        public string ReturnItemName()
-        {
-            QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
-
-            return quickSlot.ItemInSlot.item.name.ToString();
-        }
-
         public QuickSlot ReturnSelectedItem()
         {
             QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
@@ -204,9 +179,24 @@ namespace Bonjoura.UI.Inventory
             if (quickSlot.ItemInSlot != null)
             {
                 if (quickSlot.ItemInSlot.item != null)
+                {
                     _itemSpriteInHand.sprite = quickSlot.ItemInSlot.item.ItemIcon;
+
+                    // Створення об'єкта SlotData
+                    var slotData = new SlotData(true);
+
+                    // Виклик події для сповіщення про зміну слота
+                    OnSlotChanged?.Invoke(slotData);
+                }
                 else
-                    _itemSpriteInHand.color = new Color(1, 1, 1, 0); ;
+                {
+                    _itemSpriteInHand.color = new Color(1, 1, 1, 0);
+                    // Створення об'єкта SlotData
+                    var slotData = new SlotData(true);
+
+                    // Виклик події для сповіщення про зміну слота
+                    OnSlotChanged?.Invoke(slotData);
+                }
 
                 _itemSpriteInHand.SetNativeSize();
 
@@ -220,17 +210,13 @@ namespace Bonjoura.UI.Inventory
             else
             {
                 _itemSpriteInHand.color = new Color(1, 1, 1, 0);
-            }
-        }
 
-        public BaseInventoryItem GetItemFromSelectedQuickSlot()
-        {
-            QuickSlot selectedQuickSlot = quickSlots[_currentSelectQuickSlotIndex];
-            if (selectedQuickSlot.ItemInSlot != null)
-            {
-                return selectedQuickSlot.ItemInSlot.item;
+                // Створення об'єкта SlotData
+                var slotData = new SlotData(false);
+
+                // Виклик події для сповіщення про зміну слота
+                OnSlotChanged?.Invoke(slotData);
             }
-            return null;
         }
 
         private void OnEnable()
