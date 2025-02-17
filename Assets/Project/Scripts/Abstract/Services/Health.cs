@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SGS29.Utilities;
 
 namespace Bonjoura.Services
 {
@@ -97,7 +98,7 @@ namespace Bonjoura.Services
         {
             if (_isPlayer)
             {
-                if (PlayerController.Instance.PlayerHungerSystem.CurrentHunger >= 80 && (PlayerController.Instance.PlayerTemperatureSystem.Temperature > 30f && PlayerController.Instance.PlayerTemperatureSystem.Temperature < 44f))
+                if (SM.Instance<PlayerController>().PlayerHungerSystem.CurrentHunger >= 80 && (SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature > 30f && SM.Instance<PlayerController>().PlayerTemperatureSystem.Temperature < 44f))
                 {
                     if (Timer.SimpleTimer(_cooldownHealDelay, cooldownHeal)) _isCanHeal = true;
                     Heal(14); // 7 times for full health;

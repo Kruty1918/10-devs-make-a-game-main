@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using SGS29.Utilities;
 
 namespace Bonjoura.Player
 {
@@ -31,7 +32,7 @@ namespace Bonjoura.Player
         {
             _agent = GetComponent<NavMeshAgent>();
             _speed = _agent.speed;
-            _player = PlayerController.Instance.GetComponentInChildren<CharacterController>().transform;
+            _player = SM.Instance<PlayerController>().GetComponentInChildren<CharacterController>().transform;
             _mobAnimator = GetComponentInChildren<Animator>();
             _sfxPoolManager = GetComponentInChildren<SFXPoolManager>();
             StartCoroutine(PatrolRoutine());

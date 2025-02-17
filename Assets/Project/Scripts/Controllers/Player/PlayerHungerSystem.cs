@@ -1,4 +1,5 @@
 using Bonjoura.UI.Inventory;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -47,7 +48,7 @@ namespace Bonjoura.Player
                 {
                     if (item.RepairHunger > 0)
                     {
-                        PlayerController.Instance.ItemInventory.RemoveItem(item);
+                        SM.Instance<PlayerController>().ItemInventory.RemoveItem(item);
 
                         _currentHunger += item.RepairHunger;
 
@@ -63,7 +64,7 @@ namespace Bonjoura.Player
 
                 /*if (item != null && item == _meatRawItem)
                 {
-                    PlayerController.Instance.ItemInventory.RemoveItem(item);
+                    SM.Instance<PlayerController>().ItemInventory.RemoveItem(item);
 
                     _currentHunger += _repairHunger;
 
@@ -76,7 +77,7 @@ namespace Bonjoura.Player
                     _inventoryUI.PutInHandItem();
                 } else if (item != null && item == _meatCookedItem)
                 {
-                    PlayerController.Instance.ItemInventory.RemoveItem(item);
+                    SM.Instance<PlayerController>().ItemInventory.RemoveItem(item);
 
                     _currentHunger += _repairHungerFromCooked;
 

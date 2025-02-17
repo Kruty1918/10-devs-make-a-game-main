@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Services
@@ -7,10 +8,10 @@ namespace Bonjoura.Services
     {
         protected abstract void OnIgnore();
         protected abstract void OnDetect();
-        
+
         private void RaycastDetect()
         {
-            if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject)
+            if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject)
             {
                 OnIgnore();
                 return;
@@ -20,12 +21,12 @@ namespace Bonjoura.Services
 
         private void OnEnable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent += RaycastDetect;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += RaycastDetect;
         }
-        
+
         private void OnDisable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent -= RaycastDetect;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= RaycastDetect;
         }
     }
 }

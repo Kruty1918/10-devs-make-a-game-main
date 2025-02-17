@@ -41,7 +41,7 @@ namespace Bonjoura.Services
         }
         private void Getting()
         {
-            if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
+            if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
             if (!SM.Instance<InputManager>().Player.Attack.WasPressedThisFrame()) return;
 
             _stepToGet++;
@@ -62,9 +62,9 @@ namespace Bonjoura.Services
                 droppedItem.Drop(randomDirection, spreadForce);
                 droppedItem.SetItem(itemToGet);
             }
-            PlayerController.Instance.GetExperienceScript().AddXP(exp);
-            PlayerController.Instance.GetXPParticle().transform.position = transform.position;
-            PlayerController.Instance.GetXPParticle().Play();
+            SM.Instance<PlayerController>().GetExperienceScript().AddXP(exp);
+            SM.Instance<PlayerController>().GetXPParticle().transform.position = transform.position;
+            SM.Instance<PlayerController>().GetXPParticle().Play();
             Destroy(gameObject);
         }
 
@@ -101,12 +101,12 @@ namespace Bonjoura.Services
 
         private void OnEnable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent += Getting;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += Getting;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Getting;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Getting;
         }
     }
 }

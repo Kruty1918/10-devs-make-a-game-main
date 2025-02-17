@@ -43,7 +43,7 @@ namespace Bonjoura.UI
 
             IsOpened = !IsOpened;
             _menuToOpen.SetActive(IsOpened);
-            PlayerController.Instance.FPSCamera.enabled = !IsOpened;
+            SM.Instance<PlayerController>().FPSCamera.enabled = !IsOpened;
             SM.Instance<InputManager>().ChangeCursorState(IsOpened);
         }
 

@@ -11,7 +11,7 @@ namespace Bonjoura.Player
             LosePanel.SetActive(true);
             quickTipText.text = PosthumousTipGenerator.Instance.GenerateQuickTip(reason);
             SM.Instance<InputManager>().ChangeCursorState(true);
-            PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+            SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
             Time.timeScale = 0;
         }
     }

@@ -14,7 +14,7 @@ namespace Bonjoura.UI
         protected void OpenMenu(InputAction.CallbackContext obj)
         {
             panel.SetActive(!panel.activeSelf);
-            PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+            SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
             _isPanelOpen = !_isPanelOpen;
             SM.Instance<InputManager>().ChangeCursorState(_isPanelOpen);
         }

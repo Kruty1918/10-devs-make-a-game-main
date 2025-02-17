@@ -1,5 +1,6 @@
 ﻿using System;
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,7 +19,7 @@ namespace Bonjoura.Services
 
         private void Awake()
         {
-            _raycastPoint = PlayerController.Instance.FPSCamera.transform;
+            _raycastPoint = SM.Instance<PlayerController>().FPSCamera.transform;
         }
 
         private void Update()

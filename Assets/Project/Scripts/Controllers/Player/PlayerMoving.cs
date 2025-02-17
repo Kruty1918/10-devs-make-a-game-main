@@ -87,23 +87,23 @@ namespace Bonjoura.Player
             if (!_isGround)
             {
                 if (SM.Instance<InputManager>().MoveAxis.x != 0)
-                    _velocityInput.x = Mathf.MoveTowards(_velocityInput.x, SM.Instance<InputManager>().MoveAxis.x, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
+                    _velocityInput.x = Mathf.MoveTowards(_velocityInput.x, SM.Instance<InputManager>().MoveAxis.x, SM.Instance<PlayerController>().PlayerData.FlyDelta * Time.deltaTime);
                 if (SM.Instance<InputManager>().MoveAxis.y != 0)
-                    _velocityInput.y = Mathf.MoveTowards(_velocityInput.y, SM.Instance<InputManager>().MoveAxis.y, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
+                    _velocityInput.y = Mathf.MoveTowards(_velocityInput.y, SM.Instance<InputManager>().MoveAxis.y, SM.Instance<PlayerController>().PlayerData.FlyDelta * Time.deltaTime);
             }
             else
             {
-                _velocityInput = Vector3.MoveTowards(_velocityInput, SM.Instance<InputManager>().MoveAxis, PlayerController.Instance.PlayerData.DeltaMove * Time.deltaTime);
+                _velocityInput = Vector3.MoveTowards(_velocityInput, SM.Instance<InputManager>().MoveAxis, SM.Instance<PlayerController>().PlayerData.DeltaMove * Time.deltaTime);
             }
         }
 
         private void Movement()
         {
-            Vector3 right = PlayerController.Instance.FPSCamera.transform.right;
-            Vector3 forward = PlayerController.Instance.FPSCamera.transform.forward;
+            Vector3 right = SM.Instance<PlayerController>().FPSCamera.transform.right;
+            Vector3 forward = SM.Instance<PlayerController>().FPSCamera.transform.forward;
 
-            if (Mathf.Approximately(forward.y, 1)) forward = -PlayerController.Instance.FPSCamera.transform.up;
-            else if (Mathf.Approximately(forward.y, -1)) forward = PlayerController.Instance.FPSCamera.transform.up;
+            if (Mathf.Approximately(forward.y, 1)) forward = -SM.Instance<PlayerController>().FPSCamera.transform.up;
+            else if (Mathf.Approximately(forward.y, -1)) forward = SM.Instance<PlayerController>().FPSCamera.transform.up;
 
             forward = new Vector3(forward.x, 0, forward.z).normalized;
 
@@ -111,14 +111,14 @@ namespace Bonjoura.Player
             _forwardMoveWithoutVelocity = right * SM.Instance<InputManager>().MoveAxis.x + forward * SM.Instance<InputManager>().MoveAxis.y;
 
             if (_isBlockMovement) return;
-            _moveVelocity.x = _forwardMove.x * PlayerController.Instance.PlayerData.SpeedMove * speed;
-            _moveVelocity.z = _forwardMove.z * PlayerController.Instance.PlayerData.SpeedMove * speed;
+            _moveVelocity.x = _forwardMove.x * SM.Instance<PlayerController>().PlayerData.SpeedMove * speed;
+            _moveVelocity.z = _forwardMove.z * SM.Instance<PlayerController>().PlayerData.SpeedMove * speed;
             _characterController.Move(_moveVelocity * Time.deltaTime);
         }
 
         private void Gravity()
         {
-            _velocity.y += PlayerController.Instance.PlayerData.GravityForce * Time.deltaTime;
+            _velocity.y += SM.Instance<PlayerController>().PlayerData.GravityForce * Time.deltaTime;
         }
 
         public void BlockMovement()

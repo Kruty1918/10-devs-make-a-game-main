@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using Bonjoura.Player;
+using SGS29.Utilities;
 
 namespace Bonjoura.AI
 {
@@ -32,7 +33,7 @@ namespace Bonjoura.AI
         {
             _agent = GetComponent<NavMeshAgent>();
             _speed = _agent.speed;
-            _player = PlayerController.Instance.GetComponentInChildren<CharacterController>().transform;
+            _player = SM.Instance<PlayerController>().GetComponentInChildren<CharacterController>().transform;
             _mobAnimator = GetComponent<Animator>();
             _sfxPoolManager = GetComponentInChildren<SFXPoolManager>();
             StartCoroutine(PatrolRoutine());
@@ -70,7 +71,7 @@ namespace Bonjoura.AI
 
         private void PeacefulMobMovement()
         {
-            _player ??= PlayerController.Instance.transform;
+            _player ??= SM.Instance<PlayerController>().transform;
             float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
 
             if (distanceToPlayer <= _detectionRadius)

@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using SGS29.Utilities;
 
 public class UpgradeCard : MonoBehaviour
 {
@@ -74,8 +75,8 @@ public class UpgradeCard : MonoBehaviour
 
     private bool TrySpendNeededItems()
     {
-        var inventory = PlayerController.Instance.ItemInventory;
-        int xp = PlayerController.Instance.GetExperienceScript().experience;
+        var inventory = SM.Instance<PlayerController>().ItemInventory;
+        int xp = SM.Instance<PlayerController>().GetExperienceScript().experience;
         int quantity = inventory.GetItemQuantity(_needItem);
         Debug.Log(quantity);
         bool canRemove = quantity >= _neededQuantity;
@@ -90,7 +91,7 @@ public class UpgradeCard : MonoBehaviour
             {
                 inventory.RemoveItem(_needItem);
             }
-            PlayerController.Instance.GetExperienceScript().RemoveXP(_needXp);
+            SM.Instance<PlayerController>().GetExperienceScript().RemoveXP(_needXp);
         }
         return canRemove;
     }

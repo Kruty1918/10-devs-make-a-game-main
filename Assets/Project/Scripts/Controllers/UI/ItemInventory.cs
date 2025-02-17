@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.UI
@@ -90,12 +91,12 @@ namespace Bonjoura.UI
 
         private void CreateDroppedItem(BaseInventoryItem item)
         {
-            GameObject droppedItemObject = Instantiate(droppedItemReference, PlayerController.Instance.FPSCamera.transform.position, Quaternion.identity);
+            GameObject droppedItemObject = Instantiate(droppedItemReference, SM.Instance<PlayerController>().FPSCamera.transform.position, Quaternion.identity);
             DroppedItem droppedItem = droppedItemObject.GetComponent<DroppedItem>();
 
             droppedItem.SetSprite(item.ItemIcon);
             droppedItem.SetSpriteScale(item.IconScale);
-            droppedItem.Drop(PlayerController.Instance.FPSCamera.transform.forward, forceDrop);
+            droppedItem.Drop(SM.Instance<PlayerController>().FPSCamera.transform.forward, forceDrop);
             droppedItem.SetItem(item);
         }
 

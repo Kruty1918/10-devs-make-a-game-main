@@ -9,8 +9,8 @@ namespace Bonjoura.Player
         private float jumpForce = 1;
         private void Jumping(InputAction.CallbackContext ob)
         {
-            if (PlayerController.Instance.PlayerMoving.IsGrounded)
-                PlayerController.Instance.PlayerMoving.AddVelocityY(Mathf.Sqrt(PlayerController.Instance.PlayerData.JumpForce * jumpForce * -2f * PlayerController.Instance.PlayerData.GravityForce));
+            if (SM.Instance<PlayerController>().PlayerMoving.IsGrounded)
+                SM.Instance<PlayerController>().PlayerMoving.AddVelocityY(Mathf.Sqrt(SM.Instance<PlayerController>().PlayerData.JumpForce * jumpForce * -2f * SM.Instance<PlayerController>().PlayerData.GravityForce));
         }
 
         private void OnEnable()

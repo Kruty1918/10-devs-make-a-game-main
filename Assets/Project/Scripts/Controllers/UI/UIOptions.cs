@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,7 @@ public class UIOptions : MonoBehaviour
 
     private void Update()
     {
-       //OpenPauseMenu();
+        //OpenPauseMenu();
     }
 
     private void OpenPauseMenu()
@@ -31,21 +32,21 @@ public class UIOptions : MonoBehaviour
     {
         Panel.SetActive(true);
         Time.timeScale = 0f;
-        PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+        SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
     }
 
     public void ClosePanel(GameObject Panel)
     {
         Panel.SetActive(false);
         Time.timeScale = 1.0f;
-        PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+        SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
     }
 
     public void OpenScene(int SceneIndex)
     {
         SceneManager.LoadScene(SceneIndex);
         Time.timeScale = 1.0f;
-        PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
+        SM.Instance<PlayerController>().FPSCamera.enabled = !SM.Instance<PlayerController>().FPSCamera.enabled;
     }
 
 }

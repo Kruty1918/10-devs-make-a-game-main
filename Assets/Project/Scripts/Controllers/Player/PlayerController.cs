@@ -1,15 +1,12 @@
 using Bonjoura.UI;
 using Bonjoura.Services;
 using UnityEngine;
+using SGS29.Utilities;
 
 namespace Bonjoura.Player
 {
-    public sealed class PlayerController : MonoBehaviour
+    public sealed class PlayerController : MonoSingleton<PlayerController>
     {
-        private static PlayerController _playerController;
-
-        public static PlayerController Instance => _playerController;
-
         [Header("Data")]
         [SerializeField] private PlayerData playerData;
 
@@ -41,14 +38,5 @@ namespace Bonjoura.Player
 
         public ParticleSystem GetXPParticle() => XPparticle;
         public Experience GetExperienceScript() => XPScript;
-        private void Awake()
-        {
-            if (_playerController)
-            {
-                Destroy(this);
-                return;
-            }
-            _playerController = this;
-        }
     }
 }

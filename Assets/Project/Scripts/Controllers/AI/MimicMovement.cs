@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Bonjoura.Player;
 using Bonjoura.Services;
+using SGS29.Utilities;
 
 namespace Bonjoura.AI
 {
@@ -36,7 +37,7 @@ namespace Bonjoura.AI
         {
             _agent = GetComponent<NavMeshAgent>();
             _speed = _agent.speed;
-            _player = PlayerController.Instance.GetComponentInChildren<CharacterController>().transform;
+            _player = SM.Instance<PlayerController>().GetComponentInChildren<CharacterController>().transform;
             _characterController = _player.GetComponent<CharacterController>();
             _mobAnimator = GetComponentInChildren<Animator>();
         }

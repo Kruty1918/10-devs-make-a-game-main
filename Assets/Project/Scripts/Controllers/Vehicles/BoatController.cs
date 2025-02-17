@@ -102,12 +102,12 @@ namespace Bonjoura.Player
 
         private void OnEnable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent += Sit;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += Sit;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Sit;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Sit;
         }
     }
 }

@@ -1,8 +1,8 @@
-using Bonjoura.UI;
 using Bonjoura.Player;
-using UnityEngine;
+using Bonjoura.Craft;
+using SGS29.Utilities;
 
-namespace Bonjoura.Craft
+namespace Bonjoura.Utilities
 {
     public class MaterialItemChecker
     {
@@ -13,7 +13,7 @@ namespace Bonjoura.Craft
 
         public bool IsExist(MaterialItem material)
         {
-            var inventory = PlayerController.Instance.ItemInventory;
+            var inventory = SM.Instance<PlayerController>().ItemInventory;
             var quantity = inventory.GetItemQuantity(material.item);
 
             if (material.quantity > quantity)

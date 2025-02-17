@@ -25,20 +25,20 @@ namespace Bonjoura.UI
 
         private void Getting()
         {
-            if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
+            if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
             if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
-            if (!PlayerController.Instance.ItemInventory.AddItem(_itemToGet)) return;
+            if (!SM.Instance<PlayerController>().ItemInventory.AddItem(_itemToGet)) return;
             Destroy(gameObject);
         }
 
         private void OnEnable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent += Getting;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += Getting;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Getting;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Getting;
         }
     }
 }

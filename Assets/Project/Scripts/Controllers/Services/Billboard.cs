@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Services
@@ -10,7 +11,7 @@ namespace Bonjoura.Services
 
         private void Start()
         {
-            _cameraTransform = PlayerController.Instance.FPSCamera.transform;
+            _cameraTransform = SM.Instance<PlayerController>().FPSCamera.transform;
         }
 
         private void LateUpdate()

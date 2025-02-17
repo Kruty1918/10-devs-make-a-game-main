@@ -24,7 +24,7 @@ public class LootBox : MonoBehaviour
 
     private void Getting()
     {
-        if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
+        if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
         if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
         CheckForSpawnMimic();
 
@@ -34,7 +34,7 @@ public class LootBox : MonoBehaviour
 
     private void GiveLoot(List<Loot> loots)
     {
-        var inventory = PlayerController.Instance.ItemInventory;
+        var inventory = SM.Instance<PlayerController>().ItemInventory;
 
         foreach (var loot in loots)
         {
@@ -44,12 +44,12 @@ public class LootBox : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerController.Instance.InteractRaycast.OnRaycastEvent += Getting;
+        SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += Getting;
     }
 
     private void OnDisable()
     {
-        PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Getting;
+        SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Getting;
     }
 }
 

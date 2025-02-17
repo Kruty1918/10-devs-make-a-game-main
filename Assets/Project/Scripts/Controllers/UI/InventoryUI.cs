@@ -67,7 +67,7 @@ namespace Bonjoura.UI.Inventory
                 {
                     _selectedSlot.GroupUI.transform.localPosition = new Vector3(0, 0, _selectedSlot.GroupUI.transform.position.z);
                     BaseSlot.ReplaceItem(_selectedSlot, baseSlot);
-                    PlayerController.Instance.ItemInventory.SwapSlots(_selectedSlot.SlotIndex, baseSlot.SlotIndex);
+                    SM.Instance<PlayerController>().ItemInventory.SwapSlots(_selectedSlot.SlotIndex, baseSlot.SlotIndex);
                     _selectedSlot = null;
 
                     PutInHandItem();
@@ -128,7 +128,7 @@ namespace Bonjoura.UI.Inventory
         private void SelectQuickSlot(int index)
         {
             quickSlots[index].SelectSlot();
-            PlayerController.Instance.ItemInventory.SelectSlot(index);
+            SM.Instance<PlayerController>().ItemInventory.SelectSlot(index);
             _currentSelectQuickSlotIndex = index;
 
             PutInHandItem();
@@ -138,16 +138,16 @@ namespace Bonjoura.UI.Inventory
         {
             QuickSlot quickSlot = quickSlots[_currentSelectQuickSlotIndex];
             if (quickSlot.ItemInSlot == null) return;
-            PlayerController.Instance.ItemInventory.RemoveSelectedItemWithDropped();
+            SM.Instance<PlayerController>().ItemInventory.RemoveSelectedItemWithDropped();
 
             PutInHandItem();
         }
 
         private void RefreshSlots()
         {
-            for (int i = 0; i < PlayerController.Instance.ItemInventory.InventorySlots.Count; i++)
+            for (int i = 0; i < SM.Instance<PlayerController>().ItemInventory.InventorySlots.Count; i++)
             {
-                var slot = PlayerController.Instance.ItemInventory.InventorySlots[i];
+                var slot = SM.Instance<PlayerController>().ItemInventory.InventorySlots[i];
                 var slotUI = baseSlots[i];
 
                 if (slot.IsEmpty)
@@ -166,9 +166,9 @@ namespace Bonjoura.UI.Inventory
 
         private void ReplaceSlots()
         {
-            for (int i = 0; i < PlayerController.Instance.ItemInventory.InventorySlots.Count; i++)
+            for (int i = 0; i < SM.Instance<PlayerController>().ItemInventory.InventorySlots.Count; i++)
             {
-                var slot = PlayerController.Instance.ItemInventory.InventorySlots[i];
+                var slot = SM.Instance<PlayerController>().ItemInventory.InventorySlots[i];
                 var slotUI = baseSlots[i];
 
                 if (slot.IsEmpty)
@@ -235,14 +235,14 @@ namespace Bonjoura.UI.Inventory
 
         private void OnEnable()
         {
-            PlayerController.Instance.ItemInventory.OnRefreshItemEvent += RefreshSlots;
+            SM.Instance<PlayerController>().ItemInventory.OnRefreshItemEvent += RefreshSlots;
 
             SM.Instance<InputManager>().Player.DropItem.started += DropItemFromQuickSlot;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.ItemInventory.OnRefreshItemEvent -= RefreshSlots;
+            SM.Instance<PlayerController>().ItemInventory.OnRefreshItemEvent -= RefreshSlots;
 
             if (SM.HasSingleton<InputManager>())
                 SM.Instance<InputManager>().Player.DropItem.started -= DropItemFromQuickSlot;

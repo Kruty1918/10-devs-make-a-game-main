@@ -71,7 +71,7 @@ namespace Bonjoura.Player
         }
         private void Using()
         {
-            if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
+            if (SM.Instance<PlayerController>().InteractRaycast.CurrentDetectObject != gameObject) return;
             if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
 
 
@@ -90,7 +90,7 @@ namespace Bonjoura.Player
             if (placedFood == null || !placedFood.OtherTypes.Contains(OtherType.Oak)) return;
 
             //print($"You put {placedFood.ItemName} to fuel up the fireplace");
-            PlayerController.Instance.ItemInventory.RemoveItem(placedFood);
+            SM.Instance<PlayerController>().ItemInventory.RemoveItem(placedFood);
             _burningTime += 5;
             _burningTime = Mathf.Min(_burningTime, _maxBurningTime);
             PlaceItemOnFire();
@@ -139,7 +139,7 @@ namespace Bonjoura.Player
 
         void PlaceItemOnFire()
         {
-            PlayerController.Instance.ItemInventory.RemoveItem(_rawItem);
+            SM.Instance<PlayerController>().ItemInventory.RemoveItem(_rawItem);
             if (_cookedItem != null)
                 _cookingItemSpriteRenderer.sprite = _cookedItem.ItemIcon;
         }
@@ -181,12 +181,12 @@ namespace Bonjoura.Player
 
         private void OnEnable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent += Using;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent += Using;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.InteractRaycast.OnRaycastEvent -= Using;
+            SM.Instance<PlayerController>().InteractRaycast.OnRaycastEvent -= Using;
         }
     }
 }

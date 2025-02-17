@@ -1,4 +1,6 @@
 using Bonjoura.Player;
+using Bonjoura.Utilities;
+using SGS29.Utilities;
 using System.Collections.Generic;
 
 namespace Bonjoura.Craft
@@ -7,7 +9,7 @@ namespace Bonjoura.Craft
     {
         private readonly CraftOption _craftOption;
 
-        public CraftItem(CraftOption craftOption) 
+        public CraftItem(CraftOption craftOption)
         {
             _craftOption = craftOption;
         }
@@ -19,7 +21,7 @@ namespace Bonjoura.Craft
                 if (!MaterialItemChecker.Instance.IsExist(material)) return;
             }
 
-            var inventory = PlayerController.Instance.ItemInventory;
+            var inventory = SM.Instance<PlayerController>().ItemInventory;
             foreach (var material in _craftOption.MaterialList)
             {
                 for (int i = 0; i < material.quantity; i++)
