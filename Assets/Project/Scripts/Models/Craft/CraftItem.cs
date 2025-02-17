@@ -18,7 +18,7 @@ namespace Bonjoura.Craft
         {
             foreach (var material in _craftOption.MaterialList)
             {
-                if (!MaterialItemChecker.Instance.IsExist(material)) return;
+                if (!MaterialItemChecker.IsExist(material)) return;
             }
 
             var inventory = SM.Instance<PlayerController>().ItemInventory;

@@ -40,7 +40,7 @@ namespace Bonjoura.UI.Craft
 
         private void ApplyTextColor()
         {
-            if (MaterialItemChecker.Instance.IsExist(materialItem))
+            if (MaterialItemChecker.IsExist(materialItem))
             {
                 quantityText.color = Color.white;
             }
