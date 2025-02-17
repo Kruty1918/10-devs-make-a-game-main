@@ -14,7 +14,7 @@ namespace Bonjoura.Services
         private void DescriptionSetActive(bool active)
         {
             descriptionObject.SetActive(active);
-            OnDescriptionActive.Invoke(active);
+            OnDescriptionActive?.Invoke(active);
         }
     }
 }
