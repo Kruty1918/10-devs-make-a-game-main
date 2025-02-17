@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Bonjoura.Player
 {
-    public sealed class PlayerMoving : MonoBehaviour
+    public sealed class PlayerMoving : MonoSingleton<PlayerMoving>
     {
         [Header("Ground")]
         [SerializeField] private Transform groundCheck;
@@ -14,8 +14,6 @@ namespace Bonjoura.Player
         [SerializeField] private float friction = 8f;
 
         private bool _isBlockMovement;
-
-        private float _yRotation;
 
         private CharacterController _characterController;
         private bool _isGround;
@@ -42,8 +40,9 @@ namespace Bonjoura.Player
 
         private float speed = 1;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _characterController = GetComponent<CharacterController>();
             _originalHeight = _characterController.height;
         }
