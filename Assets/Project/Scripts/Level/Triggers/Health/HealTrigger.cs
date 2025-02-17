@@ -7,13 +7,13 @@ namespace Bonjoura.Triggers
 {
     public sealed class HealTrigger : MonoBehaviour
     {
-        [Header("Health Parametrs")]
+        [Header("Health Parameters")]
         [SerializeField] private HealthType healthType = HealthType.Player;
 
         [Header("Fields")]
         [SerializeField] private int valueHealth;
 
-        [Header("Trigger Parametrs")]
+        [Header("Trigger Parameters")]
         [SerializeField] private bool onTriggerEnter = true;
         [SerializeField] private bool onTriggerStay;
         [SerializeField] private bool onTriggerExit;
@@ -28,16 +28,16 @@ namespace Bonjoura.Triggers
             if (!onTriggerEnter) return;
             var playerHealthComponent = collider.GetComponent<PlayerHealth>();
             var enemyHealthComponent = collider.GetComponent<EnemyHealth>();
-            
+
             switch (healthType)
             {
                 case HealthType.Player:
-                if (playerHealthComponent != null) HealthAction(playerHealthComponent);
-                break;
+                    if (playerHealthComponent != null) HealthAction(playerHealthComponent);
+                    break;
 
                 case HealthType.Enemy:
-                if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
-                break;
+                    if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
+                    break;
             }
         }
 
@@ -46,16 +46,16 @@ namespace Bonjoura.Triggers
             if (!onTriggerStay) return;
             var playerHealthComponent = collider.GetComponent<PlayerHealth>();
             var enemyHealthComponent = collider.GetComponent<EnemyHealth>();
-            
+
             switch (healthType)
             {
                 case HealthType.Player:
-                if (playerHealthComponent != null) HealthAction(playerHealthComponent);
-                break;
+                    if (playerHealthComponent != null) HealthAction(playerHealthComponent);
+                    break;
 
                 case HealthType.Enemy:
-                if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
-                break;
+                    if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
+                    break;
             }
         }
 
@@ -64,16 +64,16 @@ namespace Bonjoura.Triggers
             if (!onTriggerExit) return;
             var playerHealthComponent = collider.GetComponent<PlayerHealth>();
             var enemyHealthComponent = collider.GetComponent<EnemyHealth>();
-            
+
             switch (healthType)
             {
                 case HealthType.Player:
-                if (playerHealthComponent != null) HealthAction(playerHealthComponent);
-                break;
+                    if (playerHealthComponent != null) HealthAction(playerHealthComponent);
+                    break;
 
                 case HealthType.Enemy:
-                if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
-                break;
+                    if (enemyHealthComponent != null) HealthAction(enemyHealthComponent);
+                    break;
             }
         }
     }

@@ -5,23 +5,17 @@ using UnityEngine;
 
 namespace Bonjoura.Triggers
 {
-    enum EnemySpecies
-    {
-        Wolf,
-        Boby,
-        UnknownMob
-    }
     public sealed class DamageTrigger : MonoBehaviour
     {
         [SerializeField] private EnemySpecies enemySpecies = EnemySpecies.UnknownMob;
 
-        [Header("Health Parametrs")]
+        [Header("Health Parameters")]
         [SerializeField] private HealthType healthType = HealthType.Player;
 
         [Header("Fields")]
         [SerializeField] private int valueHealth;
 
-        [Header("Trigger Parametrs")]
+        [Header("Trigger Parameters")]
         [SerializeField] private bool onTriggerEnter = true;
         [SerializeField] private bool onTriggerStay;
         [SerializeField] private bool onTriggerExit;
