@@ -1,5 +1,6 @@
 using Bonjoura.UI;
 using Bonjoura.UI.Inventory;
+using SGS29.Utilities;
 using System.Collections;
 using UnityEngine;
 
@@ -71,7 +72,7 @@ namespace Bonjoura.Player
         private void Using()
         {
             if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
-            if (!InputManager.Instance.Player.Interact.WasPressedThisFrame()) return;
+            if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
 
 
             if (_isCooking) return;

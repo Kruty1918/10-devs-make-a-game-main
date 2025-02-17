@@ -30,6 +30,7 @@ namespace Bonjoura.Player
 
         protected override void Awake()
         {
+            base.Awake();
             _inputActions = new InputSystem_Actions();
             InitNumberKeys();
             DontDestroyOnLoad(gameObject);

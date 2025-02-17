@@ -1,3 +1,4 @@
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,12 +15,12 @@ namespace Bonjoura.Player
 
         private void OnEnable()
         {
-            InputManager.Instance.Player.Jump.started += Jumping;
+            SM.Instance<InputManager>().Player.Jump.started += Jumping;
         }
 
         private void OnDisable()
         {
-            InputManager.Instance.Player.Jump.started -= Jumping;
+            SM.Instance<InputManager>().Player.Jump.started -= Jumping;
         }
         public void UpdateMovingJump(float _jump)
         {

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using SGS29.Utilities;
 
 namespace Bonjoura.Player
 {
@@ -36,7 +36,7 @@ namespace Bonjoura.Player
                 HandleBoatControls();
 
 
-                if (InputManager.Instance.Player.Interact.WasPressedThisFrame())
+                if (SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame())
                 {
                     ExitBoat();
                 }
@@ -45,7 +45,7 @@ namespace Bonjoura.Player
 
         private void HandleBoatControls()
         {
-            Vector2 moveInput = InputManager.Instance.MoveAxis;
+            Vector2 moveInput = SM.Instance<InputManager>().MoveAxis;
 
             if (moveInput.y < 0)
             {
@@ -93,7 +93,7 @@ namespace Bonjoura.Player
 
         public void Sit()
         {
-            if (Vector3.Distance(transform.position, _player.transform.position) < 2f && InputManager.Instance.Player.Interact.WasPressedThisFrame())
+            if (Vector3.Distance(transform.position, _player.transform.position) < 2f && SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame())
             {
                 EnterBoat();
             }

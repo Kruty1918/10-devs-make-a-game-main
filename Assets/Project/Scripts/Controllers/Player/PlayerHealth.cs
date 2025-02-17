@@ -1,4 +1,5 @@
 using Bonjoura.Services;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Player
@@ -9,7 +10,7 @@ namespace Bonjoura.Player
         {
             LosePanle.SetActive(true);
             quickTipText.text = PosthumousTipGenerator.Instance.GenerateQuickTip(reason);
-            InputManager.Instance.ChangeCursorState(true);
+            SM.Instance<InputManager>().ChangeCursorState(true);
             PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
             Time.timeScale = 0;
         }

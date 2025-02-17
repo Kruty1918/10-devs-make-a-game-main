@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.UI
@@ -25,7 +26,7 @@ namespace Bonjoura.UI
         private void Getting()
         {
             if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
-            if (!InputManager.Instance.Player.Interact.WasPressedThisFrame()) return;
+            if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
             if (!PlayerController.Instance.ItemInventory.AddItem(_itemToGet)) return;
             Destroy(gameObject);
         }

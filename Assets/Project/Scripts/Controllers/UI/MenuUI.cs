@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +16,7 @@ namespace Bonjoura.UI
             panel.SetActive(!panel.activeSelf);
             PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;
             _isPanelOpen = !_isPanelOpen;
-            InputManager.Instance.ChangeCursorState(_isPanelOpen);
+            SM.Instance<InputManager>().ChangeCursorState(_isPanelOpen);
         }
     }
 }

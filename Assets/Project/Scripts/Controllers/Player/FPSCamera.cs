@@ -1,3 +1,4 @@
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Player
@@ -19,8 +20,8 @@ namespace Bonjoura.Player
 
         private void CameraRotate()
         {
-            _xRotation -= InputManager.Instance.LookAxis.y * sensitivity;
-            _yRotation += InputManager.Instance.LookAxis.x * sensitivity;
+            _xRotation -= SM.Instance<InputManager>().LookAxis.y * sensitivity;
+            _yRotation += SM.Instance<InputManager>().LookAxis.x * sensitivity;
 
             _xRotation = Mathf.Clamp(_xRotation, -90, 90);
 

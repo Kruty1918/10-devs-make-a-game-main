@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,8 +31,8 @@ namespace Bonjoura.UI
 
         private void Toggle(InputAction.CallbackContext callbackContext)
         {
-            // Debug.Log($"MenuOpenClose toggle {InputManager.Instance.CursorShowed}");
-            if (InputManager.Instance.CursorShowed && IsOpened == false)
+            // Debug.Log($"MenuOpenClose toggle {SM.Instance<InputManager>().CursorShowed}");
+            if (SM.Instance<InputManager>().CursorShowed && IsOpened == false)
             {
                 foreach (MenuOpenClose thisopener in FindObjectsOfType<MenuOpenClose>())
                 {
@@ -43,7 +44,7 @@ namespace Bonjoura.UI
             IsOpened = !IsOpened;
             _menuToOpen.SetActive(IsOpened);
             PlayerController.Instance.FPSCamera.enabled = !IsOpened;
-            InputManager.Instance.ChangeCursorState(IsOpened);
+            SM.Instance<InputManager>().ChangeCursorState(IsOpened);
         }
 
         public void Close()

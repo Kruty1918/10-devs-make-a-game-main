@@ -2,6 +2,7 @@ using Bonjoura.UI;
 using Bonjoura.Player;
 using PrimeTween;
 using UnityEngine;
+using SGS29.Utilities;
 
 namespace Bonjoura.Services
 {
@@ -41,7 +42,7 @@ namespace Bonjoura.Services
         private void Getting()
         {
             if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
-            if (!InputManager.Instance.Player.Attack.WasPressedThisFrame()) return;
+            if (!SM.Instance<InputManager>().Player.Attack.WasPressedThisFrame()) return;
 
             _stepToGet++;
             Animation();

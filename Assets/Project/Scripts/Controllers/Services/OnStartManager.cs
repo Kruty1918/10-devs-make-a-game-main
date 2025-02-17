@@ -1,4 +1,5 @@
 using Bonjoura.Player;
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Services
@@ -10,8 +11,8 @@ namespace Bonjoura.Services
 
         private void Awake()
         {
-            if (hideCursorByStart) InputManager.Instance.HideCursor();
-            else InputManager.Instance.ShowCursor();
+            if (hideCursorByStart) SM.Instance<InputManager>().HideCursor();
+            else SM.Instance<InputManager>().ShowCursor();
         }
     }
 }

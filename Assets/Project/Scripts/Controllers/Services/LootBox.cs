@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Bonjoura.UI;
 using Bonjoura.Player;
 using UnityEngine;
+using SGS29.Utilities;
 
 public class LootBox : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class LootBox : MonoBehaviour
     private void Getting()
     {
         if (PlayerController.Instance.InteractRaycast.CurrentDetectObject != gameObject) return;
-        if (!InputManager.Instance.Player.Interact.WasPressedThisFrame()) return;
+        if (!SM.Instance<InputManager>().Player.Interact.WasPressedThisFrame()) return;
         CheckForSpawnMimic();
 
         GiveLoot(_loots);

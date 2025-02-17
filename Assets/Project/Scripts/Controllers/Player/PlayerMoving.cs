@@ -1,3 +1,4 @@
+using SGS29.Utilities;
 using UnityEngine;
 
 namespace Bonjoura.Player
@@ -85,14 +86,14 @@ namespace Bonjoura.Player
         {
             if (!_isGround)
             {
-                if (InputManager.Instance.MoveAxis.x != 0)
-                    _velocityInput.x = Mathf.MoveTowards(_velocityInput.x, InputManager.Instance.MoveAxis.x, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
-                if (InputManager.Instance.MoveAxis.y != 0)
-                    _velocityInput.y = Mathf.MoveTowards(_velocityInput.y, InputManager.Instance.MoveAxis.y, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
+                if (SM.Instance<InputManager>().MoveAxis.x != 0)
+                    _velocityInput.x = Mathf.MoveTowards(_velocityInput.x, SM.Instance<InputManager>().MoveAxis.x, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
+                if (SM.Instance<InputManager>().MoveAxis.y != 0)
+                    _velocityInput.y = Mathf.MoveTowards(_velocityInput.y, SM.Instance<InputManager>().MoveAxis.y, PlayerController.Instance.PlayerData.FlyDelta * Time.deltaTime);
             }
             else
             {
-                _velocityInput = Vector3.MoveTowards(_velocityInput, InputManager.Instance.MoveAxis, PlayerController.Instance.PlayerData.DeltaMove * Time.deltaTime);
+                _velocityInput = Vector3.MoveTowards(_velocityInput, SM.Instance<InputManager>().MoveAxis, PlayerController.Instance.PlayerData.DeltaMove * Time.deltaTime);
             }
         }
 
@@ -107,7 +108,7 @@ namespace Bonjoura.Player
             forward = new Vector3(forward.x, 0, forward.z).normalized;
 
             _forwardMove = right * _velocityInput.x + forward * _velocityInput.y;
-            _forwardMoveWithoutVelocity = right * InputManager.Instance.MoveAxis.x + forward * InputManager.Instance.MoveAxis.y;
+            _forwardMoveWithoutVelocity = right * SM.Instance<InputManager>().MoveAxis.x + forward * SM.Instance<InputManager>().MoveAxis.y;
 
             if (_isBlockMovement) return;
             _moveVelocity.x = _forwardMove.x * PlayerController.Instance.PlayerData.SpeedMove * speed;

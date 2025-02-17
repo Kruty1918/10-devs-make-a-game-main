@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using SGS29.Utilities;
 
 namespace Bonjoura.UI.Inventory
 {
@@ -36,9 +37,9 @@ namespace Bonjoura.UI.Inventory
 
         private void Update()
         {
-            if (InputManager.Instance.CurrentControls == Controls.KeyboardAndMouse) ChangeQuickSlot();
+            if (SM.Instance<InputManager>().CurrentControls == Controls.KeyboardAndMouse) ChangeQuickSlot();
 
-            if (InputManager.Instance.ScrollAxis != Vector2.zero)
+            if (SM.Instance<InputManager>().ScrollAxis != Vector2.zero)
                 ChangeSlotByScroll();
 
             MoveItem();
@@ -49,9 +50,9 @@ namespace Bonjoura.UI.Inventory
             if (!_openClose.IsOpened) return;
 
             if (_selectedSlot)
-                _selectedSlot.GroupUI.transform.position = new Vector3(InputManager.Instance.GetMousePosition().x, InputManager.Instance.GetMousePosition().y, _selectedSlot.GroupUI.transform.position.z);
+                _selectedSlot.GroupUI.transform.position = new Vector3(SM.Instance<InputManager>().GetMousePosition().x, SM.Instance<InputManager>().GetMousePosition().y, _selectedSlot.GroupUI.transform.position.z);
 
-            if (!InputManager.Instance.Player.Attack.WasPressedThisFrame()) return;
+            if (!SM.Instance<InputManager>().Player.Attack.WasPressedThisFrame()) return;
             foreach (var baseSlot in baseSlots)
             {
                 if (!baseSlot.IsMouseEnter) continue;
@@ -82,7 +83,7 @@ namespace Bonjoura.UI.Inventory
             if (!isDelay)
             {
                 isDelay = true;
-                int axis = (int)Mathf.Sign(InputManager.Instance.ScrollAxis.y);
+                int axis = (int)Mathf.Sign(SM.Instance<InputManager>().ScrollAxis.y);
                 _previousSelectedQuickSlotIndex = _currentSelectQuickSlotIndex;
                 _currentSelectQuickSlotIndex -= axis;
 
@@ -109,7 +110,7 @@ namespace Bonjoura.UI.Inventory
         {
             for (int i = 0; i < quickSlots.Length; i++)
             {
-                if (!InputManager.Instance.NumberKeys[i + 1].wasPressedThisFrame) continue;
+                if (!SM.Instance<InputManager>().NumberKeys[i + 1].wasPressedThisFrame) continue;
                 if (i == _currentSelectQuickSlotIndex) return;
 
                 quickSlots[_currentSelectQuickSlotIndex].Deselect();
@@ -236,14 +237,14 @@ namespace Bonjoura.UI.Inventory
         {
             PlayerController.Instance.ItemInventory.OnRefreshItemEvent += RefreshSlots;
 
-            InputManager.Instance.Player.DropItem.started += DropItemFromQuickSlot;
+            SM.Instance<InputManager>().Player.DropItem.started += DropItemFromQuickSlot;
         }
 
         private void OnDisable()
         {
             PlayerController.Instance.ItemInventory.OnRefreshItemEvent -= RefreshSlots;
 
-            InputManager.Instance.Player.DropItem.started -= DropItemFromQuickSlot;
+            SM.Instance<InputManager>().Player.DropItem.started -= DropItemFromQuickSlot;
         }
     }
 }
