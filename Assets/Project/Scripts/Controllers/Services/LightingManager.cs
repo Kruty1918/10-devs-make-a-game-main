@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Bonjoura.Services
 {
-    [ExecuteAlways]
     public class LightingManager : MonoBehaviour
     {
         [SerializeField] private Light _directionalLight;
@@ -23,7 +22,7 @@ namespace Bonjoura.Services
             _timeOfDay = 0;
         }
 
-        private void Update()
+        public void Update()
         {
             if (_presetLight == null)
             {
@@ -91,7 +90,7 @@ namespace Bonjoura.Services
     public class LightingManagerEditor : Editor
     {
         private LightingManager _lightingManager;
-        private bool drawDayNightUI;
+        private bool drawDayNight;
 
         private void OnEnable()
         {
@@ -103,10 +102,11 @@ namespace Bonjoura.Services
             base.OnInspectorGUI();
 
             // Прапорець для малювання UI дня і ночі
-            drawDayNightUI = EditorGUILayout.Toggle("Draw Day & Night UI", drawDayNightUI);
+            drawDayNight = EditorGUILayout.Toggle("Draw Day & Night", drawDayNight);
 
-            if (drawDayNightUI)
+            if (drawDayNight)
             {
+                _lightingManager.Update();
                 DrawDayNightUI();
             }
         }
