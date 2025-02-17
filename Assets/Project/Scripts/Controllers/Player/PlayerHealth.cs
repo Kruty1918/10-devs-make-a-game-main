@@ -6,9 +6,9 @@ namespace Bonjoura.Player
 {
     public sealed class PlayerHealth : Health
     {
-        public void PlayerDeth(GameObject LosePanle, TMPro.TextMeshProUGUI quickTipText, string reason)
+        public void PlayerDeath(GameObject LosePanel, TMPro.TextMeshProUGUI quickTipText, string reason)
         {
-            LosePanle.SetActive(true);
+            LosePanel.SetActive(true);
             quickTipText.text = PosthumousTipGenerator.Instance.GenerateQuickTip(reason);
             SM.Instance<InputManager>().ChangeCursorState(true);
             PlayerController.Instance.FPSCamera.enabled = !PlayerController.Instance.FPSCamera.enabled;

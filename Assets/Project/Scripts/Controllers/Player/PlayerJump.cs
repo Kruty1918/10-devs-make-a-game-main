@@ -20,7 +20,8 @@ namespace Bonjoura.Player
 
         private void OnDisable()
         {
-            SM.Instance<InputManager>().Player.Jump.started -= Jumping;
+            if (SM.HasSingleton<InputManager>())
+                SM.Instance<InputManager>().Player.Jump.started -= Jumping;
         }
         public void UpdateMovingJump(float _jump)
         {

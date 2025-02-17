@@ -18,7 +18,7 @@ namespace Bonjoura.Services
         [SerializeField] private float cooldownDamage;
 
         [SerializeField] private Slider _healthBar;
-        [SerializeField] private GameObject _losePanle;
+        [SerializeField] private GameObject _losePanel;
         [SerializeField] private TextMeshProUGUI _quickTipText;
 
         private bool _isCanHeal = true;
@@ -66,7 +66,7 @@ namespace Bonjoura.Services
             _cooldownDamageDelay = Time.time;
             currentHealth -= value;
             _healthBar.value = currentHealth;
-            Canvas.ForceUpdateCanvases();  // trying to force update canvas                     //I have so much problems whith HP Slided update ((
+            Canvas.ForceUpdateCanvases();  // trying to force update canvas                     //I have so much problems with HP Sided update ((
             Debug.Log("HealthBar Value is set to currentHealth on object: " + gameObject);      //Idk wtf is going on
             Debug.Log("HealthBar Value Updated to: " + _healthBar.value + " On slider: " + _healthBar);
             currentHealth = Mathf.Clamp(currentHealth, 0, maximumHealth);                       //                                 9-th dev
@@ -81,7 +81,7 @@ namespace Bonjoura.Services
                 if (currentHealth <= 0)
                 {
                     PlayerHealth playerHealth = gameObject.GetComponent<PlayerHealth>();
-                    playerHealth.PlayerDeth(_losePanle, _quickTipText, reason);
+                    playerHealth.PlayerDeath(_losePanel, _quickTipText, reason);
                 }
             }
 

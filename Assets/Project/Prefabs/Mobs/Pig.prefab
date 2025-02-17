@@ -366,12 +366,12 @@ GameObject:
   - component: {fileID: 172605168399390360}
   - component: {fileID: 3234420940126498530}
   - component: {fileID: 9053974144576460793}
+  - component: {fileID: 4295901204703321212}
   - component: {fileID: 1013721946362903971}
   - component: {fileID: 971803536089409187}
   - component: {fileID: 6175216301921251058}
   - component: {fileID: 3383137788564773991}
   - component: {fileID: 2476927019987090055}
-  - component: {fileID: 4295901204703321212}
   - component: {fileID: 2061435205133451474}
   m_Layer: 8
   m_Name: Pig
@@ -441,6 +441,28 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &4295901204703321212
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809686427900412115}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 625a47c5557362149a493a6744988994, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1013721946362903971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,28 +587,6 @@ MonoBehaviour:
   durationAnimation: 0.2
   ease: 2
   unscaling: {x: 0.1, y: 0.1, z: 0.1}
---- !u!95 &4295901204703321212
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6809686427900412115}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 625a47c5557362149a493a6744988994, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2061435205133451474
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -244,7 +244,8 @@ namespace Bonjoura.UI.Inventory
         {
             PlayerController.Instance.ItemInventory.OnRefreshItemEvent -= RefreshSlots;
 
-            SM.Instance<InputManager>().Player.DropItem.started -= DropItemFromQuickSlot;
+            if (SM.HasSingleton<InputManager>())
+                SM.Instance<InputManager>().Player.DropItem.started -= DropItemFromQuickSlot;
         }
     }
 }
