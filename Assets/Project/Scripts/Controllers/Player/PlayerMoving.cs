@@ -80,9 +80,9 @@ namespace Bonjoura.Player
         {
             _isGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-            if (_isGround)
+            if (_isGround && _velocity.y < 0)
             {
-                _velocity.y = Mathf.MoveTowards(_velocity.y, -2f, 50f * Time.deltaTime);
+                _velocity.y = -2;
             }
         }
 
