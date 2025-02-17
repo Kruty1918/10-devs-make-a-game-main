@@ -52,6 +52,9 @@ namespace Bonjoura.Player
 
         private void Update()
         {
+            if (GameStates.State != GameState.Played)
+                return;
+
             CheckGround();
 
             VelocitySetter();
