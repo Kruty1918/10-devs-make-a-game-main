@@ -11814,7 +11814,7 @@ GameObject:
   - component: {fileID: 669251867}
   - component: {fileID: 669251866}
   m_Layer: 0
-  m_Name: Arm
+  m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11879,7 +11879,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: bf57385e4f63e3b42a54731b2879d985, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22171,6 +22171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669883833}
   - component: {fileID: 1669883834}
+  - component: {fileID: 1669883835}
   m_Layer: 0
   m_Name: 'Head[0]'
   m_TagString: Untagged
@@ -22210,6 +22211,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1999943385}
   sensitivity: 0.2
+--- !u!114 &1669883835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669883832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb5fa650af554348ab01e9e651ea07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armObj: {fileID: 669251864}
 --- !u!1 &1679730962
 GameObject:
   m_ObjectHideFlags: 0
