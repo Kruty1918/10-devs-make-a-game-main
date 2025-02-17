@@ -56,6 +56,8 @@ public class LightingManager : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+    [Obsolete]
     private void OnValidate()
     {
         if (_directionalLight != null)
@@ -80,4 +82,5 @@ public class LightingManager : MonoBehaviour
             }
         }
     }
+#endif
 }
